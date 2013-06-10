@@ -22,6 +22,7 @@
                 namespace = names[0],
                 basename = names[1],
                 fullname = namespace + '-' + basename,
+                eventnamespace = '.' + basename,
                 args = arguments,
                 instanceProps = props,
                 protoProps = jqfactory.common,
@@ -79,7 +80,7 @@
                 widget.fullname = fullname;
                 widget.namespace = namespace;
                 widget.basename = basename;
-                widget.eventnamespace = '.' + widget.basename;
+                widget.eventnamespace = eventnamespace;
                 $.data(elem, widget.fullname, jqfactory.utils.publicApi(widget));
                 obj[fullname] = function(elem) {
                     return $(elem).data(fullname) !== undefined;
