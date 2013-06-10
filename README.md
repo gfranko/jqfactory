@@ -12,3 +12,33 @@ jqfactory
  - Supports automatic event binding/delegation and event removal
  - Prevents multiple plugin initializations per element
  - Provides a jQuery plugin pseudo selector to query for all DOM elements that have called the plugin
+
+ ##Requirements
+ jQuery 1.7+
+
+ ##Browser support
+ IE8+
+
+ ##Quick Start
+    1.  Download **jQuery** and **jqfactory**, create your plugin file, and include them all as `script` tags on an HTML page
+        ```
+        <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+        <script src="./jqfactory.js"></script>
+        <script src="./myawesomeplugin.js"></script>
+        ```
+    2.  Start building your jQuery plugin with **jqfactory**!
+
+##Guide
+
+
+ ##Changelog
+ > 0.1.0 - June 10, 2013
+  - Initial release!
+
+ ##Contributors
+ Greg Franko
+
+ ##License
+ Copyright (c) 2013 Greg Franko Licensed under the MIT license.
+
+
