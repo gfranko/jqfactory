@@ -21,7 +21,7 @@ jqfactory
 
  ##Quick Start
     1.  Download **jQuery** and **jqfactory**, create your plugin file, and include them all as `script` tags on an HTML page
-        ```
+        ```html
         <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
         <script src="./jqfactory.js"></script>
         <script src="./myawesomeplugin.js"></script>
