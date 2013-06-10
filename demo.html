@@ -1,0 +1,75 @@
+<!doctype html>
+<head>
+  <meta charset="utf-8">
+  <!--<link type="text/css" rel="stylesheet" href="css/jqm.css" /> -->
+  <style>
+  .testing {
+    font-weight: bold;
+    font-size: 20px;
+  }
+  </style>
+</head>
+<body>
+<ul class="allstar">
+    <li class='star'>I am an allstar!</li>
+    <li class='beginner'>I a beginner!</li>
+</ul>
+<div class="test">Test</div>
+<div class="test"></div>
+<div class="test"></div>
+<div class="test"></div>
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script src="./jqfactory.js"></script>
+<script>
+    $.jqfactory('ui.greg', {
+        _create: function() {
+            this._on({
+                '.beginner click': function(ev) {
+                    console.log('beginner clicked!');
+                },
+                '.beginner mouseenter': function(ev, data) {
+                    console.log('beginner mouseenter');
+                }
+            });
+        },
+        _render: function() {
+        },
+        _postrender: function() {
+            this._trigger('destroy');
+        },
+        options: {
+            person: {
+                name: {
+                    firstname: 'greg',
+                    lastname: 'franko'
+                }
+            },
+            animal: 'lion'
+        },
+        _events: {
+            '.star click': function (ev) {
+            },
+            '!window click': function() {
+            },
+            'destroy': function() {
+                console.log('destroy called');
+            },
+            'setOption': function(ev, data) {
+                console.log('setOption', data);
+            },
+            'setOptions': function(ev, data) {
+                console.log('setOptions', data);
+            },
+            'jennyisawesome': function() {
+                console.log('jenny is awesome');
+            },
+            'disable': function() {
+            },
+            'enable': function() {
+            }
+        }
+    });
+
+</script>
+</body>
+</html>
