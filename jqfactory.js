@@ -146,7 +146,7 @@
             _create: $.noop,
             _render: $.noop,
             _postrender: $.noop,
-            events: {},
+            _events: {},
             _on: function(selector, fn) {
                 var obj = {};
                 if($.isPlainObject(selector)) {
