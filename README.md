@@ -23,13 +23,21 @@ jqfactory
     1.  Download **jQuery** and **jqfactory**, create your plugin file, and include them all as `script` tags on an HTML page
         ```html
         <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+
         <script src="./jqfactory.js"></script>
+
         <script src="./myawesomeplugin.js"></script>
         ```
     2.  Start building your jQuery plugin with **jqfactory**!
 
-##Guide
+##Developer Guide
+    1.  Wrap your entire plugin in an immediately invoked function expression (IIFE)
 
+        ```javascript
+        (function($, window, document, undefined) {
+            // Your plugin will go here
+        }(jQuery, window, document));
+        ```
 
  ##Changelog
  > 0.1.0 - June 10, 2013
