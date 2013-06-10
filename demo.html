@@ -22,6 +22,15 @@
 <script src="./jqfactory.js"></script>
 <script>
     $.jqfactory('ui.greg', {
+        options: {
+            person: {
+                name: {
+                    firstname: 'greg',
+                    lastname: 'franko'
+                }
+            },
+            animal: 'lion'
+        },
         _create: function() {
             var def = $.Deferred();
             console.log('_create called');
@@ -37,27 +46,6 @@
                 def.resolve('testing');
             }, 1000);
             return def;
-        },
-        _postrender: function(data) {
-            //this._trigger('destroy');
-            console.log('_postrender called');
-            this._on({
-                '.beginner click': function(ev) {
-                    console.log('beginner clicked!');
-                },
-                '.beginner mouseenter': function(ev, data) {
-                    console.log('beginner mouseenter');
-                }
-            });
-        },
-        options: {
-            person: {
-                name: {
-                    firstname: 'greg',
-                    lastname: 'franko'
-                }
-            },
-            animal: 'lion'
         },
         _events: {
             '.star click': function (ev) {
@@ -80,6 +68,18 @@
             },
             'enable': function() {
             }
+        },
+        _postrender: function(data) {
+            //this._trigger('destroy');
+            console.log('_postrender called');
+            this._on({
+                '.beginner click': function(ev) {
+                    console.log('beginner clicked!');
+                },
+                '.beginner mouseenter': function(ev, data) {
+                    console.log('beginner mouseenter');
+                }
+            });
         }
     });
 
