@@ -280,15 +280,6 @@
                     }
                 }
                 return this;
-            },
-            _keyMappings: {
-                '38': 'up',
-                '40': 'down',
-                '13': 'enter',
-                '8': 'backspace',
-                '9': 'tab',
-                '32': 'space',
-                '27': 'esc'
             }
         }
     };
