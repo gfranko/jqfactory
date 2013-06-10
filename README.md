@@ -44,63 +44,116 @@ IE8+
 **Note:** All methods used in this section are referenced in the _API_ documentation (further down)
 
 2.  Use the `$.jqfactory()` method to start creating your jQuery plugin.
+
+    **Note:** `jqfactory` requires a namespace and base name.
     
     ```javascript
-    $.jqfactory('person.greg', {
-        // Your plugin instance properties will go here
-    });
+    (function($, window, document, undefined) {
+        // Your plugin will go here
+        $.jqfactory('person.greg', {
+            // Your plugin instance properties will go here
+        });
+    }(jQuery, window, document));
     ```
 
 3.  Include an `options` object that will store your default plugin options
 
     ```javascript
-    $.jqfactory('person.greg', {
-        // Default plugin options
-        option: {
-            occupation: 'JavaScript Engineer',
-            age: 24
-        }
-    });
+    (function($, window, document, undefined) {
+        // Your plugin will go here
+        $.jqfactory('person.greg', {
+            // Your plugin instance properties will go here
+            // Default plugin options
+            option: {
+                occupation: 'JavaScript Engineer',
+                age: 24
+            }
+        });
+    }(jQuery, window, document));
     ```
 
 4.  Include a `_create` method that will act as your plugin constructor.  This method is only called once per element.
 
     ```javascript
-    $.jqfactory('person.greg', {
-        // Default plugin options
-        option: {
-            occupation: 'JavaScript Engineer',
-            age: 24
-        },
-        // Plugin Constructor
-        _create: function() {
-            // This is where you can set plugin instance properties and do other initialization things 
-        }
-    });
+    (function($, window, document, undefined) {
+        // Your plugin will go here
+        $.jqfactory('person.greg', {
+            // Your plugin instance properties will go here
+            // Default plugin options
+            option: {
+                occupation: 'JavaScript Engineer',
+                age: 24
+            },
+            // Plugin Constructor
+            _create: function() {
+                // This is where you can set plugin instance properties
+            }
+        });
+    }(jQuery, window, document));
     ```
 
 5.  Include a `_render` method that will handle all of your plugin dom manipulation on initialization (e.g. creating, appending, etc).  This method is called after the `_create()` method and only called once per element.
 
     ```javascript
-    $.jqfactory('person.greg', {
-        // Default plugin options
-        option: {
-            occupation: 'JavaScript Engineer',
-            age: 24
-        },
-        // Plugin Constructor
-        _create: function() {
-            // This is where you can set plugin instance properties and do other initialization things 
-        },
-        // Dom manipulation goes here
-        _render: function() {
-            // This is a perfect spot for creating and appending your plugin dom elements to the page
-        }
-    });
+    (function($, window, document, undefined) {
+        // Your plugin will go here
+        $.jqfactory('person.greg', {
+            // Your plugin instance properties will go here
+            // Default plugin options
+            option: {
+                occupation: 'JavaScript Engineer',
+                age: 24
+            },
+            // Plugin Constructor
+            _create: function() {
+                // This is where you can set plugin instance properties
+            },
+            // Dom manipulation goes here
+            _render: function() {
+                // This is a perfect spot for creating and appending your plugin dom elements to the page
+            }
+        });
+    }(jQuery, window, document));
+    ```
+
+6.  Include a `_events` object that will hold all of the event bindings for your plugin.  These events are bound after the `_render()` method is called and only called bound once per element.
+
+    ```javascript
+    (function($, window, document, undefined) {
+        // Your plugin will go here
+        $.jqfactory('person.greg', {
+            // Your plugin instance properties will go here
+            // Default plugin options
+            option: {
+                occupation: 'JavaScript Engineer',
+                age: 24
+            },
+            // Plugin Constructor
+            _create: function() {
+                // This is where you can set plugin instance properties
+            },
+            // Dom manipulation goes here
+            _render: function() {
+                // This is a perfect spot for creating and appending your plugin dom elements to the page
+            },
+            // Plugin event bindings
+            _events: {
+                // Delegated event that assumes the .face element is inside of the element that called the plugin
+                '.face click': function (ev) {
+                },
+                // The exclamation point tells jqfactory that this event should be directly bound (not delegated)
+                '!window click': function() {
+                },
+                // Special event
+                'disable': function() {
+                }
+            }
+        });
+    }(jQuery, window, document));
     ```
 
 ##API
- **$.jqfactory(String name, Object properties, Boolean enforceNamespace)** -
+ **$.jqfactory(String namespace.name, Object properties, Boolean enforceNamespace)** -
 
  - The jqfactory is a simple function on the global jQuery object - jQuery.jqfactory - that accepts 2 or 3 arguments.  The first argument to jqfactory is a string containing a namespace and the widget name, separated by a dot.
 
