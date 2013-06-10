@@ -113,7 +113,10 @@ IE8+
             // Dom manipulation goes here
             _render: function() {
                 // This is a perfect spot for creating and appending your plugin dom elements to the page
-                $('.greg').appendTo('body');
+                var greg = $({
+                    'class': 'developer'
+                });
+                greg.appendTo('body');
             }
         });
     }(jQuery, window, document));
@@ -138,7 +141,10 @@ IE8+
             // Dom manipulation goes here
             _render: function() {
                 // This is a perfect spot for creating and appending your plugin dom elements to the page
-                $('.greg').appendTo('body');
+                var greg = $({
+                    'class': 'developer'
+                });
+                greg.appendTo('body');
             },
             // Plugin event bindings
             _events: {
