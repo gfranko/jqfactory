@@ -23,6 +23,24 @@
 <script>
     $.jqfactory('ui.greg', {
         _create: function() {
+            var def = $.Deferred();
+            console.log('_create called');
+            setTimeout(function() {
+                def.resolve('test');
+            }, 2000);
+            return def;
+        },
+        _render: function(data) {
+            var def = $.Deferred();
+            console.log('_render called', data);
+            setTimeout(function() {
+                def.resolve('testing');
+            }, 1000);
+            return def;
+        },
+        _postrender: function(data) {
+            //this._trigger('destroy');
+            console.log('_postrender called');
             this._on({
                 '.beginner click': function(ev) {
                     console.log('beginner clicked!');
@@ -31,11 +49,6 @@
                     console.log('beginner mouseenter');
                 }
             });
-        },
-        _render: function() {
-        },
-        _postrender: function() {
-            this._trigger('destroy');
         },
         options: {
             person: {
@@ -69,6 +82,8 @@
             }
         }
     });
+
+    $('.allstar').greg();
 
 </script>
 </body>

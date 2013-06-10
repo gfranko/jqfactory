@@ -16,6 +16,7 @@
 (function ($, window, document, undefined) {
     'use strict';
     var slice = Array.prototype.slice,
+        $fnProps,
         jqfactory = {
         create: function(name, props, enforceNamespace) {
             var names = name.split('.'),
@@ -47,8 +48,7 @@
                 }
             };
             Plugin.prototype = protoProps;
-
-            $[namespace][basename] = $.extend(true, {}, protoProps, instanceProps);
+            $[namespace][basename] = $fnProps = instanceProps;
             if(enforceNamespace) {
                 namespaceObj[basename] = function(options) {
                     return this.each(function() {
@@ -68,7 +68,9 @@
                     obj = {},
                     widget,
                     defaultOptions = instanceProps.options || {},
-                    $elem = $(elem);
+                    $elem = $(elem),
+                    created,
+                    rendered;
                 if (existingInstance) {
                     return;
                 }
@@ -85,10 +87,16 @@
                     return $(elem).data(fullname) !== undefined;
                 };
                 $.extend($.expr[":"], obj);
-                widget._create();
-                widget._render();
-                widget._eventBindings(widget._events);
-                widget._postrender();
+                created = widget._create() || {};
+                if(jqfactory.utils.isDeferred(created)) {
+                    created.done(function() {
+                        rendered = widget._render.apply(widget, arguments) || {};
+                        jqfactory.utils.setEvents(rendered, widget, arguments);
+                    });
+                } else {
+                    rendered = widget._render() || {};
+                    jqfactory.utils.setEvents(rendered, widget);
+                }
             };
         },
         utils: {
@@ -118,6 +126,20 @@
                         return closure.apply(this.__namespace_context__, arguments);
                     };
                 });
+            },
+            isDeferred: function(def) {
+                return def.promise && def.done;
+            },
+            setEvents: function(rendered, widget, args) {
+                if(jqfactory.utils.isDeferred(rendered)) {
+                    rendered.done(function() {
+                        widget._eventBindings(widget._events);
+                        widget._postrender.apply(widget, args);
+                    });
+                } else {
+                    widget._eventBindings(widget._events);
+                    widget._postrender();
+                }
             }
         },
         common: {
@@ -181,7 +203,7 @@
             destroy: function() {
                 jqfactory.common._trigger.call(this, 'destroy');
                 this.element.off(this.eventnamespace).removeData(this.fullname);
-                jqfactory.common._eventBindings.call(this, jqfactory.common._events, 'off');
+                jqfactory.common._eventBindings.call(this, $fnProps._events, 'off');
                 return this;
             },
             option: function(key, val) {
