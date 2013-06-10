@@ -31,7 +31,7 @@
                 currentNamespace = $.fn[namespace],
                 Plugin;
             $[namespace] = $[namespace] || {};
-            if(!namespace || !basename || !$.isPlainObject(props) || !instanceProps || $[namespace][basename]) {
+            if(!namespace || !basename || !$.isPlainObject(props) || $.isEmptyObject(props) || $[namespace][basename]) {
                 return;
             }
             enforceNamespace = (function() {
