@@ -87,6 +87,7 @@ IE8+
             // Plugin Constructor
             _create: function() {
                 // This is where you can set plugin instance properties
+                this.fullname = 'Greg Franko';
             }
         });
     }(jQuery, window, document));
@@ -107,10 +108,12 @@ IE8+
             // Plugin Constructor
             _create: function() {
                 // This is where you can set plugin instance properties
+                this.fullname = 'Greg Franko';
             },
             // Dom manipulation goes here
             _render: function() {
                 // This is a perfect spot for creating and appending your plugin dom elements to the page
+                $('.greg').appendTo('body');
             }
         });
     }(jQuery, window, document));
@@ -135,6 +138,7 @@ IE8+
             // Dom manipulation goes here
             _render: function() {
                 // This is a perfect spot for creating and appending your plugin dom elements to the page
+                $('.greg').appendTo('body');
             },
             // Plugin event bindings
             _events: {
