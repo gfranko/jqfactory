@@ -33,6 +33,8 @@ IE8+
 
 ##Developer Guide
 
+**Note:** All methods used in this section are referenced in the _API_ documentation (further down)
+
 1.  Wrap your entire plugin in an immediately invoked function expression (IIFE)
 
     ```javascript
@@ -40,8 +42,6 @@ IE8+
         // Your plugin will go here
     }(jQuery, window, document));
     ```
-
-**Note:** All methods used in this section are referenced in the _API_ documentation (further down)
 
 2.  Use the `$.jqfactory()` method to start creating your jQuery plugin.
 
@@ -116,7 +116,7 @@ IE8+
     }(jQuery, window, document));
     ```
 
-6.  Include a `_events` object that will hold all of the event bindings for your plugin.  These events are bound after the `_render()` method is called and only called bound once per element.
+6.  Include an `_events` object that will hold all of the event bindings for your plugin.  These events are bound after the `_render()` method is called and only called bound once per element.
 
     ```javascript
     (function($, window, document, undefined) {
