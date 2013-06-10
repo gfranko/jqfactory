@@ -23,7 +23,6 @@
                 basename = names[1],
                 fullname = namespace + '-' + basename,
                 eventnamespace = '.' + basename,
-                args = arguments,
                 instanceProps = props,
                 protoProps = jqfactory.common,
                 setup,
