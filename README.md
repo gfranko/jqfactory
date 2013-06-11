@@ -528,21 +528,21 @@ __Should I use this instead of the jQueryUI Widget Factory?__
 
   **User API**:
 
-   _jQueryUI Widget Factory_ - Allows API methods to be called by invoking the plugin method and passing the method name as a string
+   _jQueryUI Widget Factory_ - Allows API methods to be called by invoking the plugin method and passing the method name as a string or by calling the plugin instance stored inside of each calling element's jQuery `data` method.
    
-   _jqfactory_ - API methods must be called from the plugin instance that is stored inside of each element's jQuery `data` method
+   _jqfactory_ - API methods must be called from the plugin instance that is stored inside of each calling element's jQuery `data` method
 
   **Namespacing**:
 
    _jQueryUI Widget Factory_ - Does not support jQuery prototype namespacing.  All plugins are place on the jQuery prototype using just their base name.
    
-   _jqfactory_ - Supports jQuery prototype namespacing.
+   _jqfactory_ - Supports jQuery prototype namespacing using the namespace and basename, or just basename.
 
   **Initialization**:
 
-   _jQueryUI Widget Factory_ - Does not have an `_init()` method.  Calls the `_create()` method once and calls the `_init()` method on successive calls to the widget with no arguments.
+   _jQueryUI Widget Factory_ - Calls the `_create()` method once and calls the `_init()` method on successive calls to the widget with no arguments.
    
-   _jqfactory_ - Includes a more modular initialization process.  First the `_create()` method is called, then the `_render()` method is called, `_events` are bound, and then the `_postaction()` method is called.  Also supports returning promises inside of the `_create()` and/or `_render()` methods for plugins that depend on an asynchronous action during initialization.
+   _jqfactory_ - Does not have an `_init()` method.  First the `_create()` method is called, then the `_render()` method is called, `_events` are bound, and then the `_postaction()` method is called.  Also supports returning promises inside of the `_create()` and/or `_render()` methods for plugins that depend on an asynchronous action during initialization.
 
   **Privacy Scoping**:
 
@@ -552,15 +552,15 @@ __Should I use this instead of the jQueryUI Widget Factory?__
 
   **Inheritance**:
 
-   _jQueryUI Widget Factory_ - Allows an individual widget to inherit from another widget.
+   _jQueryUI Widget Factory_ - Allows an individual widget to inherit from another widget.  By default, inherits from `$.Widget`
    
-   _jqfactory_ - Does not allow a widget to directly inherit from another widget.  To use another plugin's methods/properties, you must reference all plugin instance properties that are stored on the jQuery namespace.
+   _jqfactory_ - Does not allow a widget to directly inherit from another widget.  To use another plugin's methods/properties, you must reference all plugin instance properties that are stored on the jQuery namespace.  Every plugin inherits from `$.jqfactory.common`.
 
   **Events**:
 
    _jQueryUI Widget Factory_ - Allows you to add and remove plugin event handlers using the `_on()` and `_off()` methods.  Also allows you to trigger events and their associated option callbacks by using the `_trigger()` method.
    
-   _jqfactory_ - Allows you to easily group the majority of your event handlers inside of an `_events` object.  Event handlers can also be added and remove at different times using the `_on()` and `_off()` methods, and events can be triggered using the `_trigger()` method.  It is important to note that **jqfactory** does not natively support passing an event callback as an option.
+   _jqfactory_ - Allows you to easily group the majority of your event handlers inside of an `_events` object.  Event handlers can also be added and remove at different times using the `_on()` and `_off()` methods, and events can be triggered using the `_trigger()` method.  **It is important to note that jqfactory does not natively support passing an event callback as an option.**
 
 ##Changelog
   > 0.1.0 - June 10, 2013
