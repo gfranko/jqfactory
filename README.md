@@ -1,6 +1,8 @@
 jqfactory
 =========
 
+![jqfactory](http://0.tqn.com/d/webclipart/1/0/J/t/4/Construction-Hat.png)
+
 > A jQuery Plugin Factory that provides a consistent foundation and API for building stateful jQuery widgets. Inspired by the jQueryUI Widget Factory. 
 
 ##Notable Features
