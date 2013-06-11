@@ -328,7 +328,7 @@ IE8+, Modern Browsers
 
  **$.jqfactory(String namespace.name, Object properties, Boolean enforceNamespace)**
 
- - The jqfactory is a simple function on the global jQuery object - jQuery.jqfactory - that accepts 2 or 3 arguments.  The first argument to jqfactory is a string containing a namespace and the widget name, separated by a dot.
+ - The jqfactory is a simple function on the global jQuery object - jQuery.jqfactory - that accepts 2 or 3 arguments.  The first argument to jqfactory is a string containing a namespace and name, separated by a dot.
 
  - The namespace is mandatory, and it refers to the location on the global jQuery object where the widget instance properties will be stored. If the namespace does not exist, jqfactory will create it for you.
 
@@ -337,14 +337,17 @@ IE8+, Modern Browsers
  - The third argument is a boolean that determines if the namespace, provided in the first argument, is included on the jQuery prototype along with the plugin name.  (eg: $('.example').bootstrap().tooltip())
 
 **_create()** - Function
+
 _Description:_
 - The first method called when your jQuery plugin is initialized.  Acts as your plugin constructor function.
 
 **_render()** - Function
+
 _Description:_
 - Called after the `_create()` method.  Meant to be where all of your plugin dom manipulation initialization happens.
 
 **_events** - Object
+
 _Description:_
 - All events within this object are bound after the `_render()` method is called.
 
@@ -367,10 +370,12 @@ _Examples:_
 ```
 
 **_postevents()** - Function
+
 _Description:_
 - Called after all events from the `_events` object are bound.
 
 **_on(String selector or Object, Function)** - Function
+
 _Description:_
 - Binds/Delegates event handlers using the correct event namespace and binds the correct this context within the callback function
 
@@ -388,6 +393,7 @@ this.on({
 ```
 
 **_off(String selector or Array)** - Function
+
 _Description:_
 - Unbinds/Undelegates event handlers using the correct event namespace
 
@@ -402,6 +408,7 @@ this.off(['.test click', '.test mouseenter']);
 ```
 
 **_trigger(String selector or Array)** - Function
+
 _Description:_
 - Triggers an event using the correct event namespace
 
@@ -416,6 +423,7 @@ this._trigger('click');
 ```
 
 **_superMethod(String methodName, arguments)** - Function
+
 _Description:_
 - Call's a jqfactory method and correctly sets the context to the plugin instance
 
@@ -434,6 +442,7 @@ this._superMethod('option', 'exampleOption', true);
 ```
 
 **delay(String methodName or Function method, Number delay)** - Function
+
 _Description:_
 Delays the execution of a method by the number of milliseconds specified in the second argument (essentially setTimeout).Defaults to 0.
 
@@ -448,6 +457,7 @@ this.delay(this.destroy, 2000);
 ```
 
 **disable()** - Function
+
 _Description:_
 Set's the `disabled` option to to `true` and triggers a special `disable` event on the element that called the plugin.  This method is meant to be overriden and then called within the overriden method.  Like this:
 
@@ -460,6 +470,7 @@ disable: function() {
 ```
 
 **enable()** - Function
+
 _Description:_
 Set's the `disabled` option to to `false` and triggers a special `enable` event on the element that called the plugin.  This method is meant to be overriden and then called within the overriden method.  Like this:
 
@@ -472,6 +483,7 @@ enable: function() {
 ```
 
 **destroy()** - Function
+
 _Description:_
 Helps with memory clean-up of your plugin by unbinding all events with your plugin's event namespace and removing all event handlers bound in the `_events` object.  Also triggers a special `destroy` event on the element that called the plugin.  This method is meant to be overriden and then called within the overriden method.  Like this:
 
@@ -484,6 +496,7 @@ destroy: function() {
 ```
 
 **option()** - Function
+
 _Description:_
 This  method combines the functionality of `setOption(String key, String val)`, `setOptions(Object props)`, and `getOption(String key)` methods.  Depending on which functionality is used, a `getOption`, `setOption`, or `setOptions` event is triggered on the element that called the plugin.
 
