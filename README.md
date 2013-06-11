@@ -504,10 +504,12 @@ This  method combines the functionality of `setOption(String key, String val)`, 
 
 _Examples:_
 
+
 - Get a single option:
 ```javascript
 this.option('someOption');
 ```
+
 - Set a single option:
 ```javascript
 this.option('someOption', 'example');
