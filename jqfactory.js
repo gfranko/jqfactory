@@ -284,10 +284,8 @@
             }
         }
     };
-    if(!$.jqfactory) {
-        $.jqfactory = function() {
-            jqfactory.create.apply(this, arguments);
-        };
-        $.jqfactory.common = jqfactory.common;
-    }
+    $.jqfactory = function() {
+        jqfactory.create.apply(this, arguments);
+    };
+    $.jqfactory.common = jqfactory.common;
 }));
