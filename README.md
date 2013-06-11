@@ -524,35 +524,35 @@ this.option({ 'someOption': 'example', 'someOtherOption': 'anotherExample' });
 
 **Should I use this instead of the jQueryUI Widget Factory?**
 
-    - It depends.  Both are great solutions, but here are some of the differences:
+ - It depends.  Both are great solutions, but here are some of the differences:
 
-    _User API_:
-     **jQueryUI Widget Factory** - Allows API methods to be called by invoking the plugin method and passing the method name as a string
-     **jqfactory** - API methods must be called from the plugin instance that is stored inside of each element's jQuery `data` method
+  _User API_:
+   **jQueryUI Widget Factory** - Allows API methods to be called by invoking the plugin method and passing the method name as a string
+   **jqfactory** - API methods must be called from the plugin instance that is stored inside of each element's jQuery `data` method
 
-    _Namespacing_:
-     **jQueryUI Widget Factory** - Does not support jQuery prototype namespacing.  All plugins are place on the jQuery prototype using just their base name.
-     **jqfactory** - Supports jQuery prototype namespacing.
+  _Namespacing_:
+   **jQueryUI Widget Factory** - Does not support jQuery prototype namespacing.  All plugins are place on the jQuery prototype using just their base name.
+   **jqfactory** - Supports jQuery prototype namespacing.
 
-    _Initialization_:
-     **jQueryUI Widget Factory** - Does not have an `_init()` method.  Calls the `_create()` method once and calls the `_init()` method on successive calls to the widget with no arguments.
-     **jqfactory** - Includes a more modular initialization process.  First the `_create()` method is called, then the `_render()` method is called, `_events` are bound, and then the `_postaction()` method is called.  Also supports returning promises inside of the `_create()` and/or `_render()` methods for plugins that depend on an asynchronous action during initialization.
+  _Initialization_:
+   **jQueryUI Widget Factory** - Does not have an `_init()` method.  Calls the `_create()` method once and calls the `_init()` method on successive calls to the widget with no arguments.
+   **jqfactory** - Includes a more modular initialization process.  First the `_create()` method is called, then the `_render()` method is called, `_events` are bound, and then the `_postaction()` method is called.  Also supports returning promises inside of the `_create()` and/or `_render()` methods for plugins that depend on an asynchronous action during initialization.
 
-    _Privacy Scoping_:
-     **jQueryUI Widget Factory** - Does not allow methods/properties prefixed with an `_` to be called when invoked from the plugin method, but all methods/properties are public on the instance stored in each element's jQuery `data()` method.
-     **jqfactory** - Only methods/properties not prefixed with an `_` are public on the instance stored in each element's jQuery `data()` method.
+  _Privacy Scoping_:
+   **jQueryUI Widget Factory** - Does not allow methods/properties prefixed with an `_` to be called when invoked from the plugin method, but all methods/properties are public on the instance stored in each element's jQuery `data()` method.
+   **jqfactory** - Only methods/properties not prefixed with an `_` are public on the instance stored in each element's jQuery `data()` method.
 
-    _Inheritance_:
-     **jQueryUI Widget Factory** - Allows an individual widget to inherit from another widget.
-     **jqfactory** - Does not allow a widget to directly inherit from another widget.  To use another plugin's methods/properties, you must reference all plugin instance properties that are stored on the jQuery namespace.
+  _Inheritance_:
+   **jQueryUI Widget Factory** - Allows an individual widget to inherit from another widget.
+   **jqfactory** - Does not allow a widget to directly inherit from another widget.  To use another plugin's methods/properties, you must reference all plugin instance properties that are stored on the jQuery namespace.
 
-    _Events_:
-     **jQueryUI Widget Factory** - Allows you to add and remove plugin event handlers using the `_on()` and `_off()` methods.  Also allows you to trigger events and their associated option callbacks by using the `_trigger()` method.
-     **jqfactory** - Allows you to easily group the majority of your event handlers inside of an `_events` object.  Event handlers can also be added and remove at different times using the `_on()` and `_off()` methods, and events can be triggered using the `_trigger()` method.  It is important to note that **jqfactory** does not natively support passing an event callback as an option.
+  _Events_:
+   **jQueryUI Widget Factory** - Allows you to add and remove plugin event handlers using the `_on()` and `_off()` methods.  Also allows you to trigger events and their associated option callbacks by using the `_trigger()` method.
+   **jqfactory** - Allows you to easily group the majority of your event handlers inside of an `_events` object.  Event handlers can also be added and remove at different times using the `_on()` and `_off()` methods, and events can be triggered using the `_trigger()` method.  It is important to note that **jqfactory** does not natively support passing an event callback as an option.
 
  ##Changelog
- > 0.1.0 - June 10, 2013
-  - Initial release!
+  > 0.1.0 - June 10, 2013
+   - Initial release!
 
  ##Contributors
  Greg Franko
