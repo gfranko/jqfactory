@@ -298,23 +298,32 @@ IE8+, Modern Browsers
  - The third argument is a boolean that determines if the namespace, provided in the first argument, is included on the jQuery prototype along with the plugin name.  (eg: $('.example').bootstrap().tooltip())
 
 **_create()** - Function
+_Description:_
 - The first method called when your jQuery plugin is initialized.  Acts as your plugin constructor function.
 
 **_render()** - Function
+_Description:_
 - Called after the `_create()` method.  Meant to be where all of your plugin dom manipulation initialization happens.
 
 **_events** - Object
+_Description:_
 - All events within this object are bound after the `_render()` method is called.
+
+_Examples:_
 - Supports event delegation: `'.test click': function(){}`
 - Supports direct event binding: `'!.test click': function(){}`
 - Supports special events: `'superfantastic': function(){}`,
 - Supports automatic binding if there is a this.element property: `'click': function(){}`
 
 **_postevents()** - Function
+_Description:_
 - Called after all events from the `_events` object are bound.
 
 **_on(String selector or Object, Function)** - Function
+_Description:_
 - Binds/Delegates event handlers using the correct event namespace and binds the correct this context within the callback function
+
+_Examples:_
 - Single event binding :
     `this._on('.test click', function(){});`
 - Multiple event binding:
@@ -324,13 +333,40 @@ IE8+, Modern Browsers
     });`
 
 **_off(String selector or Array)** - Function
+_Description:_
 - Unbinds/Undelegates event handlers using the correct event namespace
+
+_Examples:_
 - Single event unbinding :
     `this._off('.test click');`
 - Multiple event unbinding:
     `this.off(['.test click', '.test mouseenter']);`
 
 **_trigger(String selector or Array)** - Function
+_Description:_
+- Triggers an event using the correct event namespace
+
+_Examples:_
+- Element Event Trigger:
+`this._trigger('.test', 'click');`
+- This.element Event Trigger:
+`this._trigger('click');`
+
+**_superMethod(String methodName, arguments)** - Function
+_Description:_
+- Call's a jqfactory method and correctly sets the context to the plugin instance
+
+_Examples:_
+- Method with no arguments:
+`this._superMethod('destroy);`
+- Method with one argument:
+`this._superMethod('option', 'exampleOption');`
+- Method with two arguments:
+`this._superMethod('option', 'exampleOption', true);`
+
+
+
+
 
  ##Changelog
  > 0.1.0 - June 10, 2013
