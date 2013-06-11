@@ -355,18 +355,25 @@ _Description:_
 
 _Examples:_
 - Supports event delegation:
+
 ```javascript
 '.test click': function(){}
 ```
+
 - Supports direct event binding:
+
 ```javascript
 '!.test click': function(){}
 ```
+
 - Supports special events: 
+
 ```javascript
 'superfantastic': function(){}
 ```
+
 - Supports automatic binding if there is a this.element property:
+
 ```javascript
 'click': function(){}
 ```
@@ -382,11 +389,15 @@ _Description:_
 - Binds/Delegates event handlers using the correct event namespace and binds the correct this context within the callback function
 
 _Examples:_
+
 - Single event binding :
+
 ```javascript
 this._on('.test click', function(){});
 ```
+
 - Multiple event binding:
+
 ```javascript
 this.on({
         '.test click': function(){},
@@ -400,11 +411,15 @@ _Description:_
 - Unbinds/Undelegates event handlers using the correct event namespace
 
 _Examples:_
+
 - Single event unbinding :
+
 ```javascript
 this._off('.test click');
 ```
+
 - Multiple event unbinding:
+
 ```javascript
 this.off(['.test click', '.test mouseenter']);
 ```
@@ -415,11 +430,15 @@ _Description:_
 - Triggers an event using the correct event namespace
 
 _Examples:_
+
 - Element Event Trigger:
+
 ```javascript
 this._trigger('.test', 'click');
 ```
+
 - This.element Event Trigger:
+
 ```javascript
 this._trigger('click');
 ```
@@ -430,15 +449,21 @@ _Description:_
 - Call's a jqfactory method and correctly sets the context to the plugin instance
 
 _Examples:_
+
 - Method with no arguments:
+
 ```javascript
 this._superMethod('destroy);
 ```
+
 - Method with one argument:
+
 ```javascript
 this._superMethod('option', 'exampleOption');
 ```
+
 - Method with two arguments:
+
 ```javascript
 this._superMethod('option', 'exampleOption', true);
 ```
@@ -449,11 +474,15 @@ _Description:_
 Delays the execution of a method by the number of milliseconds specified in the second argument (essentially setTimeout). Defaults to 0.
 
 _Examples:_
+
 - Specifying a method with a string:
+
 ```javascript
 this.delay('destroy', 2000);
 ```
+
 - Specifying a method with a function:
+
 ```javascript
 this.delay(this.destroy, 2000);
 ```
@@ -464,6 +493,7 @@ _Description:_
 Set's the `disabled` option to to `true` and triggers a special `disable` event on the element that called the plugin.  This method is meant to be overriden and then called within the overriden method.  Like this:
 
 `_Example:_`
+
 ```javascript
 disable: function() {
     // Your custom disable logic goes here
@@ -477,6 +507,7 @@ _Description:_
 Set's the `disabled` option to to `false` and triggers a special `enable` event on the element that called the plugin.  This method is meant to be overriden and then called within the overriden method.  Like this:
 
 `_Example:_`
+
 ```javascript
 enable: function() {
     // Your custom disable logic goes here
@@ -490,6 +521,7 @@ _Description:_
 Helps with memory clean-up of your plugin by unbinding all events with your plugin's event namespace and removing all event handlers bound in the `_events` object.  Also triggers a special `destroy` event on the element that called the plugin.  This method is meant to be overriden and then called within the overriden method.  Like this:
 
 `_Example:_`
+
 ```javascript
 destroy: function() {
     // Your custom disable logic goes here
@@ -516,6 +548,7 @@ this.option('someOption', 'example');
 ```
 
 - Set multiple options:
+
 ```javascript
 this.option({ 'someOption': 'example', 'someOtherOption': 'anotherExample' });
 ```
