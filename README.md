@@ -471,6 +471,7 @@ this._superMethod('option', 'exampleOption', true);
 **delay(String methodName or Function method, Number delay)** - Function
 
 _Description:_
+
 Delays the execution of a method by the number of milliseconds specified in the second argument (essentially setTimeout). Defaults to 0.
 
 _Examples:_
@@ -492,7 +493,7 @@ this.delay(this.destroy, 2000);
 _Description:_
 Set's the `disabled` option to to `true` and triggers a special `disable` event on the element that called the plugin.  This method is meant to be overriden and then called within the overriden method.  Like this:
 
-`_Example:_`
+_Examples:_
 
 ```javascript
 disable: function() {
@@ -506,7 +507,7 @@ disable: function() {
 _Description:_
 Set's the `disabled` option to to `false` and triggers a special `enable` event on the element that called the plugin.  This method is meant to be overriden and then called within the overriden method.  Like this:
 
-`_Example:_`
+_Examples:_
 
 ```javascript
 enable: function() {
@@ -520,7 +521,7 @@ enable: function() {
 _Description:_
 Helps with memory clean-up of your plugin by unbinding all events with your plugin's event namespace and removing all event handlers bound in the `_events` object.  Also triggers a special `destroy` event on the element that called the plugin.  This method is meant to be overriden and then called within the overriden method.  Like this:
 
-`_Example:_`
+_Examples:_
 
 ```javascript
 destroy: function() {
