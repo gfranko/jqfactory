@@ -123,7 +123,7 @@ IE8+, Modern Browsers
             // Dom manipulation goes here
             _render: function() {
                 // This is a perfect spot for creating and appending your plugin dom elements to the page
-                var greg = $({
+                var greg = $('<div/>', {
                     'class': 'developer'
                 });
                 greg.appendTo('body');
@@ -155,7 +155,7 @@ IE8+, Modern Browsers
             // Dom manipulation goes here
             _render: function() {
                 // This is a perfect spot for creating and appending your plugin dom elements to the page
-                var greg = $({
+                var greg = $('<div/>', {
                     'class': 'developer'
                 });
                 greg.appendTo('body');
@@ -200,7 +200,7 @@ IE8+, Modern Browsers
             // Dom manipulation goes here
             _render: function() {
                 // This is a perfect spot for creating and appending your plugin dom elements to the page
-                var greg = $({
+                var greg = $('<div/>', {
                     'class': 'developer'
                 });
                 greg.appendTo('body');
@@ -252,7 +252,7 @@ IE8+, Modern Browsers
             // Dom manipulation goes here
             _render: function() {
                 // This is a perfect spot for creating and appending your plugin dom elements to the page
-                var greg = $({
+                var greg = $('<div/>', {
                     'class': 'developer'
                 });
                 greg.appendTo('body');
