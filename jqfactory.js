@@ -145,8 +145,8 @@
         common: {
             _create: $.noop,
             _render: $.noop,
-            _postevents: $.noop,
             _events: {},
+            _postevents: $.noop,
             _on: function(selector, fn) {
                 var obj = {};
                 if($.isPlainObject(selector)) {

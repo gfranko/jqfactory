@@ -45,7 +45,7 @@ IE8+, Modern Browsers
 
 2.  Use the `$.jqfactory()` method to start creating your jQuery plugin.
 
-    **Note:** `jqfactory` requires a namespace and base name.
+    **Note:** The first argument of the `$.jqfactory()` method requires a namespace **and** base name.
     
     ```javascript
     (function($, window, document, undefined) {
@@ -287,7 +287,7 @@ IE8+, Modern Browsers
 9.  Make cool things!
 
 ##API
- **$.jqfactory(String namespace.name, Object properties, Boolean enforceNamespace)** -
+ **$.jqfactory(String namespace.name, Object properties, Boolean enforceNamespace)**
 
  - The jqfactory is a simple function on the global jQuery object - jQuery.jqfactory - that accepts 2 or 3 arguments.  The first argument to jqfactory is a string containing a namespace and the widget name, separated by a dot.
 
@@ -296,6 +296,39 @@ IE8+, Modern Browsers
  - The second argument is an object that is used to set the plugin instance properties.
 
  - The third argument is a boolean that determines if the namespace, provided in the first argument, is included on the jQuery prototype along with the plugin name.  (eg: $('.example').bootstrap().tooltip())
+
+**_create()** - Function
+- The first method called when your jQuery plugin is initialized.  Acts as your plugin constructor function.
+
+**_render()** - Function
+- Called after the `_create()` method.  Meant to be where all of your plugin dom manipulation initialization happens.
+
+**_events** - Object
+- All events within this object are bound after the `_render()` method is called.
+- Supports event delegation: '.test click': function(){}
+- Supports direct event binding: '!.test click': function(){}
+- Supports special events: 'superfantastic': function(){},
+- Supports automatic binding if there is a this.element property: 'click': function(){}
+
+**_postevents()** - Function
+- Called after all events from the `_events` object are bound.
+
+**_on(String selector or Object, Function)** - Function
+- Binds/Delegates event handlers using the correct event namespace and binds the correct this context within the callback function
+- Single event binding :
+    this._on('.test click', function(){});
+- Multiple event binding:
+    this.on({
+        '.test click': function(){},
+        '.test mouseenter': function(){}
+    });
+
+**_off(String selector or Array)** - Function
+- Unbinds/Undelegates event handlers using the correct event namespace
+- Single event unbinding :
+    this._off('.test click');
+- Multiple event unbinding:
+    this.off(['.test click', '.test mouseenter'])
 
  ##Changelog
  > 0.1.0 - June 10, 2013
