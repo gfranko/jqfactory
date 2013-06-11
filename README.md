@@ -550,14 +550,14 @@ this.option({ 'someOption': 'example', 'someOtherOption': 'anotherExample' });
    **jQueryUI Widget Factory** - Allows you to add and remove plugin event handlers using the `_on()` and `_off()` methods.  Also allows you to trigger events and their associated option callbacks by using the `_trigger()` method.
    **jqfactory** - Allows you to easily group the majority of your event handlers inside of an `_events` object.  Event handlers can also be added and remove at different times using the `_on()` and `_off()` methods, and events can be triggered using the `_trigger()` method.  It is important to note that **jqfactory** does not natively support passing an event callback as an option.
 
- ##Changelog
+##Changelog
   > 0.1.0 - June 10, 2013
    - Initial release!
 
- ##Contributors
+##Contributors
  Greg Franko
 
- ##License
+##License
  Copyright (c) 2013 Greg Franko Licensed under the MIT license.
 
 
