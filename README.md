@@ -1,7 +1,7 @@
 jqfactory
 =========
 
-> A jQuery Plugin Factory that provides a consistent foundation and API for building stateful jQuery widgets.  
+> A jQuery Plugin Factory that provides a consistent foundation and API for building stateful jQuery widgets. Inspired by the jQueryUI Widget Factory. 
 
 ##Notable Features
  - Supports jQuery prototype namespacing and event namespacing
