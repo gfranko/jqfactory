@@ -305,10 +305,10 @@ IE8+, Modern Browsers
 
 **_events** - Object
 - All events within this object are bound after the `_render()` method is called.
-- Supports event delegation: '.test click': function(){}
-- Supports direct event binding: '!.test click': function(){}
-- Supports special events: 'superfantastic': function(){},
-- Supports automatic binding if there is a this.element property: 'click': function(){}
+- Supports event delegation: `'.test click': function(){}`
+- Supports direct event binding: `'!.test click': function(){}`
+- Supports special events: `'superfantastic': function(){}`,
+- Supports automatic binding if there is a this.element property: `'click': function(){}`
 
 **_postevents()** - Function
 - Called after all events from the `_events` object are bound.
@@ -316,19 +316,21 @@ IE8+, Modern Browsers
 **_on(String selector or Object, Function)** - Function
 - Binds/Delegates event handlers using the correct event namespace and binds the correct this context within the callback function
 - Single event binding :
-    this._on('.test click', function(){});
+    `this._on('.test click', function(){});`
 - Multiple event binding:
-    this.on({
+    `this.on({
         '.test click': function(){},
         '.test mouseenter': function(){}
-    });
+    });`
 
 **_off(String selector or Array)** - Function
 - Unbinds/Undelegates event handlers using the correct event namespace
 - Single event unbinding :
-    this._off('.test click');
+    `this._off('.test click');`
 - Multiple event unbinding:
-    this.off(['.test click', '.test mouseenter'])
+    `this.off(['.test click', '.test mouseenter']);`
+
+**_trigger(String selector or Array)** - Function
 
  ##Changelog
  > 0.1.0 - June 10, 2013
