@@ -400,9 +400,9 @@ this._on('.test click', function(){});
 
 ```javascript
 this.on({
-        '.test click': function(){},
-        '.test mouseenter': function(){}
-    });
+    '.test click': function(){},
+    '.test mouseenter': function(){}
+});
 ```
 
 **_off(String selector or Array)** - Function
@@ -453,7 +453,7 @@ _Examples:_
 - Method with no arguments:
 
 ```javascript
-this._superMethod('destroy);
+this._superMethod('destroy');
 ```
 
 - Method with one argument:
