@@ -78,9 +78,9 @@
                 widget = new Plugin(instanceProps);
                 widget._super = jqfactory.common,
                 widget.element = $elem;
-                widget.fullname = fullname;
                 widget.namespace = namespace;
                 widget.basename = basename;
+                widget.fullname = fullname;
                 widget.eventnamespace = eventnamespace;
                 $.data(elem, widget.fullname, jqfactory.utils.publicApi(widget));
                 obj[fullname] = function(elem) {

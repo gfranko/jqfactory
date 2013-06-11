@@ -287,6 +287,24 @@ IE8+, Modern Browsers
 9.  Make cool things!
 
 ##API
+
+###Properties
+
+**_super** - A reference to the jqfactory parent object.  This is useful if you want to retrieve a property.
+
+**element** - The DOM element(s) that calls your plugin, wrapped in a jQuery object.
+
+**namespace** - The namespace string (the part of the string before the .)that was used to create the plugin.  Used internally.
+
+**basename** - The basename string (the part of the string after the .)that was used to create the plugin.  Used internally.
+
+**fullname** - A string that includes the namespace and basename separated by a dash.  Used internally.
+
+**eventnamespace** - The basename string that is prepended with a period.  Used internally.
+
+
+###Methods
+
  **$.jqfactory(String namespace.name, Object properties, Boolean enforceNamespace)**
 
  - The jqfactory is a simple function on the global jQuery object - jQuery.jqfactory - that accepts 2 or 3 arguments.  The first argument to jqfactory is a string containing a namespace and the widget name, separated by a dot.
