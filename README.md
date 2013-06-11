@@ -310,10 +310,22 @@ _Description:_
 - All events within this object are bound after the `_render()` method is called.
 
 _Examples:_
-- Supports event delegation: `'.test click': function(){}`
-- Supports direct event binding: `'!.test click': function(){}`
-- Supports special events: `'superfantastic': function(){}`,
-- Supports automatic binding if there is a this.element property: `'click': function(){}`
+- Supports event delegation:
+```javascript
+'.test click': function(){}
+```
+- Supports direct event binding:
+```javascript
+'!.test click': function(){}
+```
+- Supports special events: 
+```javascript
+'superfantastic': function(){}
+```
+- Supports automatic binding if there is a this.element property:
+```javascript
+'click': function(){}
+```
 
 **_postevents()** - Function
 _Description:_
@@ -325,12 +337,16 @@ _Description:_
 
 _Examples:_
 - Single event binding :
-    `this._on('.test click', function(){});`
+```javascript
+this._on('.test click', function(){});
+```
 - Multiple event binding:
-    `this.on({
+```javascript
+this.on({
         '.test click': function(){},
         '.test mouseenter': function(){}
-    });`
+    });
+```
 
 **_off(String selector or Array)** - Function
 _Description:_
@@ -338,9 +354,13 @@ _Description:_
 
 _Examples:_
 - Single event unbinding :
-    `this._off('.test click');`
+```javascript
+this._off('.test click');
+```
 - Multiple event unbinding:
-    `this.off(['.test click', '.test mouseenter']);`
+```javascript
+this.off(['.test click', '.test mouseenter']);
+```
 
 **_trigger(String selector or Array)** - Function
 _Description:_
@@ -348,9 +368,13 @@ _Description:_
 
 _Examples:_
 - Element Event Trigger:
-`this._trigger('.test', 'click');`
+```javascript
+this._trigger('.test', 'click');
+```
 - This.element Event Trigger:
-`this._trigger('click');`
+```javascript
+this._trigger('click');
+```
 
 **_superMethod(String methodName, arguments)** - Function
 _Description:_
@@ -358,15 +382,86 @@ _Description:_
 
 _Examples:_
 - Method with no arguments:
-`this._superMethod('destroy);`
+```javascript
+this._superMethod('destroy);
+```
 - Method with one argument:
-`this._superMethod('option', 'exampleOption');`
+```javascript
+this._superMethod('option', 'exampleOption');
+```
 - Method with two arguments:
-`this._superMethod('option', 'exampleOption', true);`
+```javascript
+this._superMethod('option', 'exampleOption', true);
+```
 
+**delay(String methodName or Function method, Number delay)** - Function
+_Description:_
+Delays the execution of a method by the number of milliseconds specified in the second argument (essentially setTimeout).Defaults to 0.
 
+_Examples:_
+- Specifying a method with a string:
+```javascript
+this.delay('destroy', 2000);
+```
+- Specifying a method with a function:
+```javascript
+this.delay(this.destroy, 2000);
+```
 
+**disable()** - Function
+_Description:_
+Set's the `disabled` option to to `true` and triggers a special `disable` event on the element that called the plugin.  This method is meant to be overriden and then called within the overriden method.  Like this:
 
+`_Example:_`
+```javascript
+disable: function() {
+    // Your custom disable logic goes here
+    this._superMethod('disable');
+}
+```
+
+**enable()** - Function
+_Description:_
+Set's the `disabled` option to to `false` and triggers a special `enable` event on the element that called the plugin.  This method is meant to be overriden and then called within the overriden method.  Like this:
+
+`_Example:_`
+```javascript
+enable: function() {
+    // Your custom disable logic goes here
+    this._superMethod('enable');
+}
+```
+
+**destroy()** - Function
+_Description:_
+Helps with memory clean-up of your plugin by unbinding all events with your plugin's event namespace and removing all event handlers bound in the `_events` object.  Also triggers a special `destroy` event on the element that called the plugin.  This method is meant to be overriden and then called within the overriden method.  Like this:
+
+`_Example:_`
+```javascript
+destroy: function() {
+    // Your custom disable logic goes here
+    this._superMethod('destroy');
+}
+```
+
+**option()** - Function
+_Description:_
+This  method combines the functionality of `setOption(String key, String val)`, `setOptions(Object props)`, and `getOption(String key)` methods.  Depending on which functionality is used, a `getOption`, `setOption`, or `setOptions` event is triggered on the element that called the plugin.
+
+_Examples:_
+- Get a single option:
+```javascript
+this.option('someOption');
+```
+- Set a single option:
+```javascript
+this.option('someOption', 'example');
+```
+
+- Set multiple options:
+```javascript
+this.option({ 'someOption': 'example', 'someOtherOption': 'anotherExample' });
+```
 
  ##Changelog
  > 0.1.0 - June 10, 2013

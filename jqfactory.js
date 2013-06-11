@@ -186,7 +186,7 @@
             },
             delay: function(handler, delay) {
                 function handlerProxy() {
-                    return (typeof handler === 'string' ? instance[ handler ] : handler).apply(instance, arguments);
+                    return ($.type(handler) === 'string' ? instance[ handler ] : handler).apply(instance, arguments);
                 }
                 var instance = this;
                 return setTimeout(handlerProxy, delay || 0);

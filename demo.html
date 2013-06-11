@@ -73,7 +73,6 @@
         },
         _postevents: function(data) {
             //this._trigger('destroy');
-            this._trigger('window', 'click');
             console.log('_postrender called');
             this._on({
                 '.beginner click': function(ev) {
@@ -83,6 +82,7 @@
                     console.log('beginner mouseenter');
                 }
             });
+            this.delay(this.destroy, 2000);
         }
     });
 
