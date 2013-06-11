@@ -36,7 +36,7 @@
             console.log('_create called');
             setTimeout(function() {
                 def.resolve('test');
-            }, 2000);
+            }, 1000);
             return def;
         },
         _render: function(data) {
@@ -49,8 +49,10 @@
         },
         _events: {
             '.star click': function (ev) {
+                console.log('star clicked');
             },
             '!window click': function() {
+                console.log('window clicked');
             },
             'destroy': function() {
                 console.log('destroy called');
@@ -69,16 +71,12 @@
             'enable': function() {
             }
         },
-        _postrender: function(data) {
+        _postevents: function(data) {
             //this._trigger('destroy');
+            this._trigger('.star', 'click');
             console.log('_postrender called');
-            this._on({
-                '.beginner click': function(ev) {
+            this._on('.beginner click', function(ev) {
                     console.log('beginner clicked!');
-                },
-                '.beginner mouseenter': function(ev, data) {
-                    console.log('beginner mouseenter');
-                }
             });
         }
     });

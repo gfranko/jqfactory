@@ -134,18 +134,18 @@
                 if(jqfactory.utils.isDeferred(rendered)) {
                     rendered.done(function() {
                         widget._eventBindings(widget._events);
-                        widget._postrender.apply(widget, args);
+                        widget._postevents.apply(widget, args);
                     });
                 } else {
                     widget._eventBindings(widget._events);
-                    widget._postrender();
+                    widget._postevents();
                 }
             }
         },
         common: {
             _create: $.noop,
             _render: $.noop,
-            _postrender: $.noop,
+            _postevents: $.noop,
             _events: {},
             _on: function(selector, fn) {
                 var obj = {};
@@ -171,6 +171,7 @@
                 return this;
             },
             _trigger: function(elem, ev, data) {
+                elem = elem === 'window' ? $(window) : elem === 'document' ? $(document) : elem;
                 var elemLength = $(elem).length;
                 data = elemLength ? data : ev;
                 ev = elemLength ? ev : elem;
