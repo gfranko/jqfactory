@@ -311,17 +311,17 @@ IE8+, Modern Browsers
 
 ###Properties
 
-**_super** - A reference to the jqfactory parent object.  This is useful if you want to retrieve a property.
+**_super** - A reference to the jqfactory parent object.  This is useful if you want to retrieve a jqfactory property.
 
-**element** - The DOM element(s) that calls your plugin, wrapped in a jQuery object.
+**element** - The DOM element that calls your plugin, wrapped in a jQuery object.
 
-**namespace** - The namespace string (the part of the string before the .)that was used to create the plugin.  Used internally.
+**namespace** - Used internally (e.g. `'person')
 
-**basename** - The basename string (the part of the string after the .)that was used to create the plugin.  Used internally.
+**basename** - Used internally (e.g. 'greg')
 
-**fullname** - A string that includes the namespace and basename separated by a dash.  Used internally.
+**fullname** - Used internally (e.g. 'person-greg').
 
-**eventnamespace** - The basename string that is prepended with a period.  Used internally.
+**eventnamespace** - Used internally (e.g. '.greg').
 
 
 ###Methods
