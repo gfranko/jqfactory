@@ -17,7 +17,7 @@ jqfactory
 jQuery 1.7+
 
 ##Browser support
-IE8+
+IE8+, Modern Browsers
 
 ##Quick Start
 1.  Download **jQuery 1.7+** and **jqfactory**, create your plugin file, and include them all as `script` tags on an HTML page
