@@ -315,6 +315,8 @@ IE8+, Modern Browsers
 
 **element** - The DOM element that calls your plugin, wrapped in a jQuery object.
 
+**options** - The currently used plugin options.
+
 **namespace** - Used internally (e.g. `'person')
 
 **basename** - Used internally (e.g. 'greg')
@@ -444,7 +446,7 @@ this._superMethod('option', 'exampleOption', true);
 **delay(String methodName or Function method, Number delay)** - Function
 
 _Description:_
-Delays the execution of a method by the number of milliseconds specified in the second argument (essentially setTimeout).Defaults to 0.
+Delays the execution of a method by the number of milliseconds specified in the second argument (essentially setTimeout). Defaults to 0.
 
 _Examples:_
 - Specifying a method with a string:
@@ -501,6 +503,7 @@ _Description:_
 This  method combines the functionality of `setOption(String key, String val)`, `setOptions(Object props)`, and `getOption(String key)` methods.  Depending on which functionality is used, a `getOption`, `setOption`, or `setOptions` event is triggered on the element that called the plugin.
 
 _Examples:_
+
 - Get a single option:
 ```javascript
 this.option('someOption');
