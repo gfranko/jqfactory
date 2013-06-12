@@ -70,7 +70,7 @@ IE8+, Modern Browsers
         $.jqfactory('person.greg', {
             // Your plugin instance properties will go here
             // Default plugin options
-            option: {
+            options: {
                 occupation: 'JavaScript Engineer',
                 age: 24
             }
@@ -88,7 +88,7 @@ IE8+, Modern Browsers
         $.jqfactory('person.greg', {
             // Your plugin instance properties will go here
             // Default plugin options
-            option: {
+            options: {
                 occupation: 'JavaScript Engineer',
                 age: 24
             },
@@ -113,7 +113,7 @@ IE8+, Modern Browsers
         $.jqfactory('person.greg', {
             // Your plugin instance properties will go here
             // Default plugin options
-            option: {
+            options: {
                 occupation: 'JavaScript Engineer',
                 age: 24
             },
@@ -146,7 +146,7 @@ IE8+, Modern Browsers
         $.jqfactory('person.greg', {
             // Your plugin instance properties will go here
             // Default plugin options
-            option: {
+            options: {
                 occupation: 'JavaScript Engineer',
                 age: 24
             },
@@ -172,7 +172,7 @@ IE8+, Modern Browsers
                 },
                 // Click event that is triggered on the element that called the plugin
                 'click': function() {
-                }
+                },
                 // Special event that is triggered on the element that called the plugin
                 'disable': function() {
                 }
@@ -191,7 +191,7 @@ IE8+, Modern Browsers
         $.jqfactory('person.greg', {
             // Your plugin instance properties will go here
             // Default plugin options
-            option: {
+            options: {
                 occupation: 'JavaScript Engineer',
                 age: 24
             },
@@ -217,7 +217,7 @@ IE8+, Modern Browsers
                 },
                 // Click event that is triggered on the element that called the plugin
                 'click': function() {
-                }
+                },
                 // Special event that is triggered on the element that called the plugin
                 'disable': function() {
                 }
@@ -243,7 +243,7 @@ IE8+, Modern Browsers
         $.jqfactory('person.greg', {
             // Your plugin instance properties will go here
             // Default plugin options
-            option: {
+            options: {
                 occupation: 'JavaScript Engineer',
                 age: 24
             },
@@ -269,7 +269,7 @@ IE8+, Modern Browsers
                 },
                 // Click event that is triggered on the element that called the plugin
                 'click': function() {
-                }
+                },
                 // Special event that is triggered on the element that called the plugin
                 'disable': function() {
                 }
