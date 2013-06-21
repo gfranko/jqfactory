@@ -74,8 +74,8 @@
                 if (existingInstance) {
                     return;
                 }
-                options = $.extend(true, {}, defaultOptions, options);
                 widget = new Plugin(instanceProps);
+                widget.options = $.extend(true, {}, defaultOptions, options);
                 widget._super = jqfactory.common,
                 widget.element = $elem;
                 widget.namespace = namespace;
