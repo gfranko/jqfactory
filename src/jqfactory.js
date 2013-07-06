@@ -139,7 +139,7 @@
             _render: $.noop,
             _events: {},
             _postevents: $.noop,
-            _on: function(selector) {
+            _on: function(selector, fn) {
                 var obj = {};
                 if($.isPlainObject(selector)) {
                     this._eventBindings(selector);
