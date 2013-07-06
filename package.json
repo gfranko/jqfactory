@@ -1,0 +1,35 @@
+{
+  "name": "jqfactory",
+  "title": "jqfactory",
+  "description": "",
+  "version": "0.2.0",
+  "homepage": "http://www.gregfranko.com/gui.com",
+  "author": {
+    "name": "Greg Franko",
+    "email": "gfranko5@yahoo.com",
+    "url": "http://www.gregfranko.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/gfranko/jqfactory.git"
+  },
+  "bugs": {
+    "url": "https://github.com/gfranko/jqfactory/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://www.gregfranko.com/jqfactory/blob/master/LICENSE-MIT"
+    }
+  ],
+  "devDependencies": {
+    "express": "3.x",
+    "grunt": "~0.4.1",
+    "grunt-contrib-uglify": "~0.2.0",
+    "grunt-contrib-jshint": "~0.3.0",
+    "grunt-contrib-jasmine": "~0.4.2"
+  },
+  "scripts": {
+    "test": "grunt travis --verbose"
+  }
+}

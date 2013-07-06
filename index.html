@@ -1,0 +1,86 @@
+<!doctype html>
+<head>
+  <meta charset="utf-8">
+  <!--<link type="text/css" rel="stylesheet" href="css/jqm.css" /> -->
+  <style>
+  .testing {
+    font-weight: bold;
+    font-size: 20px;
+  }
+  </style>
+</head>
+<body>
+<ul class="allstar">
+    <li class='star'>I am an allstar!</li>
+    <li class='beginner'>I a beginner!</li>
+</ul>
+<div class="test">Test</div>
+<div class="test"></div>
+<div class="test"></div>
+<div class="test"></div>
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script src="./src/jqfactory.js"></script>
+<script>
+    $.jqfactory('ui.greg', {
+        options: {
+            person: {
+                name: {
+                    firstname: 'greg',
+                    lastname: 'franko'
+                }
+            },
+            animal: 'lion'
+        },
+        _create: function() {
+            console.log('plugin created');
+        },
+        _init: function() {
+            console.log('plugin reinitialized');
+        },
+        _render: function(data) {
+        },
+        _events: {
+            '.star click': function (ev) {
+                console.log('star clicked');
+            },
+            '!window click': function() {
+                console.log('window clicked');
+            },
+            'destroy': function() {
+                console.log('destroy called');
+            },
+            'getOptions': function(ev, data) {
+                console.log('got options', data);
+            },
+            'getOption': function(ev, data) {
+                console.log('got option', data);
+            },
+            'setOption': function(ev, data) {
+                console.log('setOption', data);
+            },
+            'setOptions': function(ev, data) {
+                console.log('setOptions', data);
+            },
+            'disable': function() {
+            },
+            'enable': function() {
+                console.log('enabled');
+            }
+        },
+        _postevents: function(data) {
+            this._on({
+                '.beginner click': function(ev) {
+                    console.log('beginner clicked!');
+                },
+                '.beginner mouseenter': function(ev, data) {
+                    console.log('beginner mouseenter');
+                }
+            });
+            // this.delay(this.destroy, 2000);
+            // this.option({ 'animal': 'giraffe', 'person': {'name': { 'firstname': 'gregorio' }}});
+        }
+    });
+    var test = $('.allstar').greg().data('ui-greg');
+</script>
+</body>
+</html>

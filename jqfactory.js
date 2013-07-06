@@ -1,19 +1,20 @@
-/* jqfactory - v0.1.0 - 2013-6-10
+/* jqfactory - v0.2.0 - 2013-7-03
 * Copyright (c) 2013 Greg Franko; Licensed MIT */
 
 ;(function (jqfactory) {
+    // Strict Mode
     'use strict';
     if (typeof define === 'function' && define.amd) {
-        // AMD. Register as a named module.
+        // An AMD loader is on the page. Register jqfactory as a named AMD module.
         define('jqfactory', ['jquery'], function() {
             jqfactory(window.jQuery, window, document);
         });
     } else {
-        // Browser globals
+        // An AMD loader is not on the page.
         jqfactory(window.jQuery, window, document);
     }
-}
-(function ($, window, document, undefined) {
+} (function ($, window, document, undefined) {
+    // Strict mode
     'use strict';
     var slice = Array.prototype.slice,
         $fnProps,
@@ -34,15 +35,9 @@
             if(!namespace || !basename || !$.isPlainObject(props) || $.isEmptyObject(props) || $[namespace][basename]) {
                 return;
             }
-            enforceNamespace = (function() {
-                if(enforceNamespace === true) {
-                    return true;
-                }
-                return false;
-            }());
             Plugin = function(props) {
                 for(var x in props) {
-                    if(hasOwnProperty.call(props, x)) {
+                    if(props.hasOwnProperty(x)) {
                         this[x] = props[x];
                     }
                 }
@@ -58,7 +53,7 @@
                 jqfactory.utils.createNamespace(namespace, namespaceObj);
             } else {
                 $.fn[basename] = function(options) {
-                    this.each(function() {
+                    return this.each(function() {
                         setup(this, options);
                     });
                 };
@@ -91,11 +86,11 @@
                 if(jqfactory.utils.isDeferred(created)) {
                     created.done(function() {
                         rendered = widget._render.apply(widget, arguments) || {};
-                        jqfactory.utils.setEvents(rendered, widget, arguments);
+                        jqfactory.utils.postRender(rendered, widget, arguments);
                     });
                 } else {
                     rendered = widget._render() || {};
-                    jqfactory.utils.setEvents(rendered, widget);
+                    jqfactory.utils.postRender(rendered, widget);
                 }
             };
         },
@@ -128,9 +123,9 @@
                 });
             },
             isDeferred: function(def) {
-                return def.promise && def.done;
+                return $.isPlainObject(def) && def.promise && def.done;
             },
-            setEvents: function(rendered, widget, args) {
+            postRender: function(rendered, widget, args) {
                 if(jqfactory.utils.isDeferred(rendered)) {
                     rendered.done(function() {
                         widget._eventBindings(widget._events);
@@ -180,7 +175,7 @@
                 return this;
             },
             _superMethod: function() {
-                var args = slice.call(arguments,0),
+                var args = slice.call(arguments),
                     method = args.shift();
                 return jqfactory.common[method].apply(this, args);
             },
@@ -193,61 +188,82 @@
             },
             disable: function() {
                 this.option('disabled', true);
-                jqfactory.common._trigger.call(this, 'disable');
+                this._trigger('disable');
                 return this;
             },
             enable: function() {
                 this.option('disabled', false);
-                jqfactory.common._trigger.call(this, 'enable');
+                this_trigger('enable');
                 return this;
             },
             destroy: function() {
-                jqfactory.common._trigger.call(this, 'destroy');
+                this._trigger('destroy');
                 this.element.off(this.eventnamespace).removeData(this.fullname);
-                jqfactory.common._eventBindings.call(this, $fnProps._events, 'off');
+                this._eventBindings($fnProps._events, 'off');
                 return this;
             },
             option: function(key, val) {
-                if($.isPlainObject(key)) {
-                    options = $.extend(true, {}, options, key);
-                    jqfactory.common._trigger.call(this, 'setOptions', key);
-                    return;
+                var self = this,
+                    keys,
+                    keyLen,
+                    hasVal = val !== undefined,
+                    options = self.options;
+                if(arguments.length === 0) {
+                    this._trigger('getOptions', options);
+                    return options;
                 }
                 if($.type(key) === 'string' && !key.length) return;
-                var self = this,
-                    args = arguments,
-                    i = -1,
-                    keys = key.split('.'),
-                    keyLen = keys.length,
-                    options = self.options,
-                    currentOptions = options,
-                    currentOption,
-                    hasVal = val !== undefined;
-                if(keyLen === 1 && !hasVal) {
-                    return options[key];
-                }
-                else if(keyLen === 1 && hasVal) {
-                    options[key] = val;
-                    jqfactory.common._trigger.call(this, 'setOption', { key: key, val: val });
-                    return;
-                }
-                else {
-                    while (++i < keyLen) {
-                        currentOption = keys[i];
-                        if(currentOptions[currentOption]) {
-                            if(keyLen - 1 === i) {
-                                if(hasVal) {
-                                    currentOptions[currentOption] = val;
-                                    jqfactory.common._trigger.call(this, 'setOption', { key: key, val: val });
-                                    return;
-                                }
-                            }
-                            currentOptions = currentOptions[currentOption];
+                if($.isPlainObject(key)) {
+                    for(var prop in key) {
+                        if(key.hasOwnProperty(prop)) {
+                            nestedOption(prop, key[prop]);
                         }
                     }
-                    return currentOptions;
-                }
-            },
+                    this._trigger('setOptions', key);
+                } else {
+                    keys = key.split('.');
+                    keyLen = keys.length;
+                    if(keyLen === 1 && !hasVal) {
+                        this._trigger('getOption', { key: key, val: options[key] });
+                        return options[key];
+                   }
+                   else if(keyLen === 1 && hasVal) {
+                       options[key] = val;
+                       this._trigger('setOption', { key: key, val: val });
+                   }
+                   else {
+                       if(val) {
+                            nestedOption(key, val);
+                            this._trigger('setOption', { key: key, val: val });
+                       } else {
+                            this._trigger('getOption', { key: key, val: val });
+                            return nestedOption(key);
+                       }
+                   }
+               }
+               function nestedOption (key, value) {
+                   var i = -1,
+                       keys = key.split('.'),
+                       keyLen = keys.length,
+                       currentOptions = options,
+                       currentOption;
+                   while (++i < keyLen) {
+                       currentOption = keys[i];
+                       if(currentOptions[currentOption]) {
+                           if(keyLen - 1 === i) {
+                               if(value) {
+                                   currentOptions[currentOption] = value;
+                                   return;
+                               } else {
+                                    return currentOptions[currentOption];
+                               }
+                           }
+                           currentOptions = currentOptions[currentOption];
+                       }
+                   }
+               }
+               return this;
+           },
             _eventBindings: function(pluginEvents, type) {
                 var widget = this,
                     widgetElem = widget.element,
@@ -284,8 +300,10 @@
             }
         }
     };
-    $.jqfactory = function() {
-        jqfactory.create.apply(this, arguments);
-    };
-    $.jqfactory.common = jqfactory.common;
+    if($.jqfactory === undefined) {
+        $.jqfactory = function() {
+            jqfactory.create.apply(this, arguments);
+        };
+        $.jqfactory.common = jqfactory.common;
+    }
 }));
