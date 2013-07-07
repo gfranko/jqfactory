@@ -682,13 +682,15 @@ __When would I use the _superMethod method?__
  - If you are creating more than one jQuery plugin, then you can place all of your plugins under one top-level namespace on the jQuery prototype object.  This greatly reduces the possibility of running into a naming collision with another jQuery plugin.  A great example would be the Twitter Bootstrap library; it would be great if the Bootstrap library placed all of their individual jQuery plugins under a common bootstrap() namespace.
 
 ##Changelog
- > 0.2.0 - July 7, 2013
-   - First stable release - **PRODUCTION READY**
-   - Added Jasmine unit tests
 
- 
- > 0.1.0 - June 10, 2013
-   - Initial release!
+`0.2.0` - July 7, 2013
+
+ - First stable release - **PRODUCTION READY**
+ - Added Jasmine unit tests
+
+`0.1.0` - June 10, 2013
+
+ - Initial Release!
 
 ##Contributors
  Greg Franko
