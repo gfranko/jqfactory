@@ -104,6 +104,10 @@ describe('jqfactory Test Suite', function () {
                 });
                 it('should create an element property', function() {
                     expect(pluginInstance.element).toBeDefined();
+                    expect(pluginInstance.element).toBe($('.test')[0]);
+                });
+                it('should create an $element property', function() {
+                    expect(pluginInstance.$element).toBeDefined();
                     expect(pluginInstance.$element).toBe($('.test'));
                 });
                 it('should create a namespace property', function() {

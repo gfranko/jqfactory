@@ -123,11 +123,11 @@
             postRender: function(rendered, widget, args) {
                 if(jqfactory.utils.isDeferred(rendered)) {
                     rendered.done(function() {
-                        widget._eventBindings(widget._events);
+                        widget._on(widget._events);
                         widget._postevents.apply(widget, args);
                     });
                 } else {
-                    widget._eventBindings(widget._events);
+                    widget._on(widget._events);
                     widget._postevents();
                 }
             }
@@ -141,12 +141,11 @@
             _on: function(selector, fn) {
                 var obj = {};
                 if($.isPlainObject(selector)) {
-                    this._eventBindings(selector);
                     obj = selector;
                 } else if($.type(selector) === 'string' && $.isFunction(fn)) {
                     obj[selector] = fn;
-                    this._eventBindings(obj);
                 }
+                this._eventBindings(obj);
                 this._events = $.extend(true, {}, this._events, obj);
                 return this;
             },
@@ -157,6 +156,8 @@
                     while (++i < len) {
                         obj[selector[i]] = 0;
                     }
+                } else if($.isPlainObject(selector)) {
+                    obj = selector;
                 } else {
                     obj[selector] = 0;
                 }
@@ -196,8 +197,8 @@
             },
             destroy: function() {
                 this._trigger('destroy');
-                $.removeData(this.element, this.fullname);
-                this._eventBindings(this._events, 'off');
+                $.removeData(this.callingElement, this.fullname);
+                this._off(this._events, 'off');
                 return this;
             },
             option: function(key, val) {

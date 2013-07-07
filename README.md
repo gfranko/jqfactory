@@ -9,7 +9,7 @@ jqfactory
  - Supports jQuery prototype namespacing and event namespacing
  - Includes an elegant, promises-based, solution for plugins that rely on asynchronous behavior on initialization
  - Implements a simple inheritance paradigm that allows you to reuse methods/properties from other jqfactory plugins using mixins and prototypal inheritance to reuse jqfactory common methods
- - Supports privately scoping instance properties to easily construct a public API
+ - Saves all instance properties to easily construct a public API
  - Provides over 10 public/private convenience methods/properties that are useful for plugin development
  - Supports automatic event binding/delegation and event removal
  - Prevents multiple plugin initializations per element
@@ -22,7 +22,7 @@ jQuery 1.7+
 IE8+, Modern Browsers
 
 ##Quick Start
-1.  Download **jQuery 1.7+** and **jqfactory**, create your plugin file, and include them all as `script` tags on an HTML page
+1.  Download **jQuery 1.8.3+** and **jqfactory**, create your plugin file, and include them all as `script` tags on an HTML page
     ```html
     <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 
@@ -80,6 +80,8 @@ IE8+, Modern Browsers
 
 4.  Include a `_create` method that will act as your plugin constructor.  This method is only called once per element.
 
+    **Note:** You can also create an `_init` method that will be called when your plugin is reinitialized
+
     ```javascript
     (function($, window, document, undefined) {
         // Your plugin will go here
@@ -96,7 +98,12 @@ IE8+, Modern Browsers
             _create: function() {
                 // This is where you can set plugin instance properties
                 this.fullname = 'Greg Franko';
+            },
+            // Plugin re-initialized
+            _init: function() {
+                // You can include any logic that you like when your plugin constructor is re-called
             }
+        }
         });
     }(jQuery, window, document));
     ```
@@ -121,6 +128,10 @@ IE8+, Modern Browsers
             _create: function() {
                 // This is where you can set plugin instance properties
                 this.fullname = 'Greg Franko';
+            },
+            // Plugin re-initialized
+            _init: function() {
+                // You can include any logic that you like when your plugin constructor is re-called
             },
             // Dom manipulation goes here
             _render: function() {
@@ -153,6 +164,10 @@ IE8+, Modern Browsers
             // Plugin Constructor
             _create: function() {
                 // This is where you can set plugin instance properties
+            },
+            // Plugin re-initialized
+            _init: function() {
+                // You can include any logic that you like when your plugin constructor is re-called
             },
             // Dom manipulation goes here
             _render: function() {
@@ -198,6 +213,10 @@ IE8+, Modern Browsers
             // Plugin Constructor
             _create: function() {
                 // This is where you can set plugin instance properties
+            },
+            // Plugin re-initialized
+            _init: function() {
+                // You can include any logic that you like when your plugin constructor is re-called
             },
             // Dom manipulation goes here
             _render: function() {
@@ -250,6 +269,10 @@ IE8+, Modern Browsers
             // Plugin Constructor
             _create: function() {
                 // This is where you can set plugin instance properties
+            },
+            // Plugin re-initialized
+            _init: function() {
+                // You can include any logic that you like when your plugin constructor is re-called
             },
             // Dom manipulation goes here
             _render: function() {
@@ -313,9 +336,15 @@ IE8+, Modern Browsers
 
 ###Properties
 
-**_super** - A reference to the jqfactory parent object.  This is useful if you want to retrieve a jqfactory property.
+**_super** - A reference to the jqfactory parent object.  This is useful if you want to retrieve a jqfactory parent property.
 
-**element** - The DOM element that calls your plugin, wrapped in a jQuery object.
+**callingElement** - The native DOM element that calls your plugin.
+
+**$callingElement** - The native DOM element that calls your plugin, wrapped in a jQuery object.
+
+**element** - The native DOM element that is used for all delegated events.
+
+**$element** - The native DOM element, wrapped in a jQuery object, that is used for all delegated events.
 
 **options** - The currently used plugin options.
 
@@ -325,16 +354,16 @@ IE8+, Modern Browsers
 
 **fullname** - Used internally (e.g. 'person-greg').
 
-**eventnamespace** - Used internally (e.g. '.greg').
+**eventnamespace** - Used internally (e.g. '.person-greg').
 
 
 ###Methods
 
  **$.jqfactory(String namespace.name, Object properties, Boolean enforceNamespace)**
 
- - The jqfactory is a simple function on the global jQuery object - jQuery.jqfactory - that accepts 2 or 3 arguments.  The first argument to jqfactory is a string containing a namespace and name, separated by a dot.
+ - The jqfactory is a simple function on the global jQuery object - jQuery.jqfactory - that accepts 2 or 3 arguments.  The first argument to jqfactory is a string containing a namespace and name, separated by a period.
 
- - The namespace is mandatory, and it refers to the location on the global jQuery object where the widget instance properties will be stored. If the namespace does not exist, jqfactory will create it for you.
+ - The namespace is mandatory, and it refers to the location on the global jQuery object where the widget instance properties will be stored. If the namespace does not already exist, jqfactory will create it for you.
 
  - The second argument is an object that is used to set the plugin instance properties.
 
@@ -343,12 +372,17 @@ IE8+, Modern Browsers
 **_create()** - Function
 
 _Description:_
-- The first method called when your jQuery plugin is initialized.  Acts as your plugin constructor function.
+- The first method called when your jQuery plugin is initialized.  Acts as your plugin constructor function.  Supports deferred/promise objects.
+
+**_init(arguments)** - Function
+
+_Description:_
+- The method called when your jQuery plugin is re-initialized.  All user arguments are passed.
 
 **_render()** - Function
 
 _Description:_
-- Called after the `_create()` method.  Meant to be where all of your plugin dom manipulation initialization happens.
+- Called after the `_create()` method.  Meant to be where all of your plugin dom manipulation initialization happens.  Supports deferred/promise objects.
 
 **_events** - Object
 
@@ -374,7 +408,7 @@ _Examples:_
 'superfantastic': function(){}
 ```
 
-- Supports automatic binding if there is a this.element property:
+- Supports automatic binding that corresponds to the this.$element property:
 
 ```javascript
 'click': function(){}
@@ -420,10 +454,16 @@ _Examples:_
 this._off('.test click');
 ```
 
-- Multiple event unbinding:
+- Multiple event unbinding (array):
 
 ```javascript
 this.off(['.test click', '.test mouseenter']);
+```
+
+- Multiple event unbinding (object):
+
+```javascript
+this.off({ '.test click': function(){}, '.test mouseenter': function(){} });
 ```
 
 **_trigger(String selector or Array)** - Function
@@ -545,15 +585,42 @@ _Examples:_
 this.option('someOption');
 ```
 
+- Get a single nested option:
+```javascript
+this.option('someOption.someNestedOption');
+```
+
 - Set a single option:
 ```javascript
 this.option('someOption', 'example');
+```
+
+- Set a single nested option (short-form):
+```javascript
+this.option('someOption.someNestedOption', 'example');
+```
+
+- Set a single nested option (object-form):
+```javascript
+this.option('someOption': { 'someNestedOption': 'example' });
 ```
 
 - Set multiple options:
 
 ```javascript
 this.option({ 'someOption': 'example', 'someOtherOption': 'anotherExample' });
+```
+
+- Set multiple nested options (short-form):
+
+```javascript
+this.option({ 'someOption': 'example', 'someOtherOption.someNestedOption': 'anotherExample' });
+```
+
+- Set multiple nested options (object-form):
+
+```javascript
+this.option({ 'someOption': 'example', 'someOtherOption': { 'someNestedOption': 'anotherExample' } });
 ```
 
 ##FAQ
@@ -578,13 +645,7 @@ __Should I use this instead of the jQueryUI Widget Factory?__
 
    _jQueryUI Widget Factory_ - Calls the `_create()` method once and calls the `_init()` method on successive calls to the widget with no arguments.
    
-   _jqfactory_ - Does not have an `_init()` method.  First the `_create()` method is called, then the `_render()` method is called, `_events` are bound, and then the `_postaction()` method is called.  Also supports returning promises inside of the `_create()` and/or `_render()` methods for plugins that depend on an asynchronous action during initialization.
-
-  **Privacy Scoping**:
-
-   _jQueryUI Widget Factory_ - Does not allow methods/properties prefixed with an `_` to be called when invoked from the plugin method, but all methods/properties are public on the instance stored in each element's jQuery `data()` method.
-   
-   _jqfactory_ - Only methods/properties not prefixed with an `_` are public on the instance stored in each element's jQuery `data()` method.
+   _jqfactory_ - First the `_create()` method is called, then the `_render()` method is called, `_events` are bound, and then the `_postaction()` method is called.  Also supports returning promises inside of the `_create()` and/or `_render()` methods for plugins that depend on an asynchronous action during initialization.  Calls the `init()` method on successive calls to the plugin and passes all arguments.
 
   **Inheritance**:
 
@@ -598,7 +659,30 @@ __Should I use this instead of the jQueryUI Widget Factory?__
    
    _jqfactory_ - Allows you to easily group the majority of your event handlers inside of an `_events` object.  Event handlers can also be added and remove at different times using the `_on()` and `_off()` methods, and events can be triggered using the `_trigger()` method.  **It is important to note that jqfactory does not natively support passing an event callback as an option.**
 
+__How do I change which DOM element my _events property delegates from?__
+
+ - If you would like your event handlers to delegate from a different element than one that called your plugin, then you can overwrite the `element` instance property.  If you overwrite the `element` property, then you can still find out which element called your plugin by using the `callingElement` property.
+
+ __What do I do if my plugin depends on asynchronous code to start?__
+
+ - Both the `_create()` and `_render()` methods support returning a jQuery deferred/promise object.  The `render()` method will make sure to wait until the promise object returned by the `_create()` method is resolved to be called.  Similarly, all events will wait to be bound and the `_postevents()` method will wait to be called until after the jQuery deferred/promise object returned by the `render()` method is resolved.
+
+  __What is the point of the _on() method if all events inside of the _events property are already bound on initialization?__
+
+ - There are use cases for dynamically binding event handlers only when certain conditions are met in your plugin.  The `_on()` method allows developers to bind later, which can improve page load performance.  Internally, the `_on()` method will keep track of which dynamic events are bound, making sure that they get destroyed if the jqfactory `destroy()` method is called.
+
+__When would I use the _superMethod method?__
+
+ - jqfactory provides you a bunch of helpful convenience methods such as `destroy()`, `disable()`, and more.  If you want to overwrite one of the helper methods to provide your own implementation, then inside of your overridden method you can call the jqfactory parent method using the `_superMethod()` method.
+
+ __Why would you use jQuery prototype namespacing?__
+
+ - If you are creating more than one jQuery plugin, then you can place all of your plugins under one top-level namespace on the jQuery prototype object.  This greatly reduces the possibility of running into a naming collision with another jQuery plugin.  A great example would be the Twitter Bootstrap library; it would be great if the Bootstrap library placed all of their individual jQuery plugins under a common bootstrap() namespace.
+
 ##Changelog
+  > 0.2.0 - July 7, 2013
+   - First stable release - **PRODUCTION READY**
+   - Added Jasmine unit tests
   > 0.1.0 - June 10, 2013
    - Initial release!
 
