@@ -686,6 +686,7 @@ __When would I use the _superMethod method?__
    - First stable release - **PRODUCTION READY**
    - Added Jasmine unit tests
 
+ 
  > 0.1.0 - June 10, 2013
    - Initial release!
 
