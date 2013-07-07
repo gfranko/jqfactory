@@ -3,10 +3,10 @@
   "title": "jqfactory",
   "description": "",
   "version": "0.2.0",
-  "homepage": "http://www.gregfranko.com/gui.com",
+  "homepage": "https://github.com/gfranko/jqfactory",
   "author": {
     "name": "Greg Franko",
-    "email": "gfranko5@yahoo.com",
+    "email": "gregfranko5@gmail.com",
     "url": "http://www.gregfranko.com"
   },
   "repository": {
@@ -23,7 +23,6 @@
     }
   ],
   "devDependencies": {
-    "express": "3.x",
     "grunt": "~0.4.1",
     "grunt-contrib-uglify": "~0.2.0",
     "grunt-contrib-jshint": "~0.3.0",

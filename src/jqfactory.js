@@ -1,6 +1,5 @@
 /* jqfactory - v0.2.0 - 2013-7-03
 * Copyright (c) 2013 Greg Franko; Licensed MIT */
-
 ;(function (jqfactory) {
     // Strict Mode
     'use strict';
@@ -197,7 +196,6 @@
             },
             destroy: function() {
                 this._trigger('destroy');
-                this.$element.off(this.eventnamespace);
                 $.removeData(this.element, this.fullname);
                 this._eventBindings(this._events, 'off');
                 return this;
@@ -251,7 +249,7 @@
                        currentOption = keys[i];
                        if(currentOptions[currentOption]) {
                            if(keyLen - 1 === i) {
-                               if(value) {
+                               if(value !== undefined) {
                                    currentOptions[currentOption] = value;
                                    return;
                                } else {
@@ -306,5 +304,6 @@
             jqfactory.create.apply(this, arguments);
         };
         $.jqfactory.common = jqfactory.common;
+        $.jqfactory.VERSION = '0.2.0';
     }
 }));

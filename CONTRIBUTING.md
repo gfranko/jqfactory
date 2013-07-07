@@ -1,35 +1,30 @@
-Contributing to jquery.selectBoxIt.js
-=====================================
+Contributing to jqfactory
+=========================
 - Take care to maintain the existing coding style. 
 - Add Jasmine unit tests for any new or changed functionality. 
 - Lint and test your code using [grunt](https://github.com/cowboy/grunt).
 
-If you plan to contribute to SelectBoxIt in the future, keep in mind that you 
+If you plan to contribute to jqfactory in the future, keep in mind that you 
 should make sure your code **passes the Grunt checks**.  This requires having a
 complete build environment as detailed below.
 
-After you have verified your code, send a pull request to the **SelectBoxIt dev 
+After you have verified your code, send a pull request to the **jqfactory dev 
 branch**.  After you send a pull request, you will hear back from me shortly after 
 I review your code.
 
 You'll find source code in the 'src' subdirectory.
 
-Developers might want to start with the 
-[annotated source code](http://www.gregfranko.com/jquery.selectBoxIt.js/docs/jQuery.selectBoxIt.html).
-
 ## Unit Tests
 All unit tests are written using the [Jasmine](http://pivotal.github.com/jasmine/) Framework.  
 See the linked pages for a great introduction.
 
-## Setting up the SelectBoxIt build environment
+## Setting up the jqfactory build environment
 
-_Note_ that you don't actually need to do a build to use SelectBoxIt... you can 
+_Note_ that you don't actually need to do a build to use jqfactory... you can 
 just uses the JS code as-is.  These instructions exist for developers and anyone 
 who wants to delve into the code.
 
-If you just want to use SelectBoxIt, then visit the 
-[SelectBoxIt home page](http://gregfranko.com/jquery.selectBoxIt.js/) or go to 
-the [ReadMe](https://github.com/gfranko/jquery.selectBoxIt.js/blob/master/README.markdown) 
+If you just want to use jqfactory, then visit the [jqfactory ReadMe](https://github.com/gfranko/jqfactory/blob/master/README.markdown) 
 on GitHub.
 
 ### Developer tools
@@ -67,26 +62,12 @@ using `grunt.cmd`.
           cd /usr/local/bin
           sudo cp ~/Downloads/phantomjs-1.8.1-macosx/bin/phantomjs .
 
-That's it!  You should now be set up to edit and test SelectBoxIt.
-
-## Contributing.md Change Log
-
-`1.0.1` - 26 Feb 2013
-
-- Added instructions for globally installing 'grunt'.
-
-`1.0.0` - 12 Feb 2013
-
-- Initial instructions, based on my building SelectBoxIt for the first time.
+That's it!  You should now be set up to edit and test jqfactory.
 
 **Contributors**
 
 Greg Franko - [@gfranko](https://github.com/gfranko)
 
-Thomas von Deyen - [@tvdeyen](https://github.com/tvdeyen)
-
-Ron 'coyote' Lussier - [@tlenscraft](https://github.com/ronlussier)
-
 ## License
-Copyright (c) 2012 Greg Franko  
+Copyright (c) 2013 Greg Franko  
 Licensed under the MIT license.
