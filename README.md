@@ -693,7 +693,7 @@ __When would I use the _superMethod method?__
  - Initial Release!
 
 ##Contributors
- Greg Franko
+ [Greg Franko](https://github.com/gfranko)
 
 ##License
  Copyright (c) 2013 Greg Franko Licensed under the MIT license.
