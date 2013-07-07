@@ -40,8 +40,9 @@
         _render: function(data) {
         },
         _events: {
-            '.star click': function (ev) {
+            '.star click': function (ev, data) {
                 console.log('star clicked');
+                console.log('star data', data);
             },
             '!window click': function() {
                 console.log('window clicked');
@@ -61,10 +62,11 @@
             'setOptions': function(ev, data) {
                 console.log('setOptions', data);
             },
-            'disable': function() {
+            'disable': function(ev, data) {
+                console.log('disabled');
             },
-            'enable': function() {
-                console.log('enabled');
+            'enable': function(ev, data) {
+                console.log('enabled', data);
             }
         },
         _postevents: function(data) {
@@ -76,6 +78,12 @@
                     console.log('beginner mouseenter');
                 }
             });
+            this._trigger('enable', { gregorio: true });
+            // this._trigger([
+            //     '.star click',
+            //     'disable'
+            // ]);
+            // this._off(['.beginner click', '!window click']);
             // this.delay(this.destroy, 2000);
             // this.option({ 'animal': 'giraffe', 'person': {'name': { 'firstname': 'gregorio' }}});
         }

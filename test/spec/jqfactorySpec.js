@@ -19,15 +19,15 @@ describe('jqfactory Test Suite', function () {
             _init: function(){},
             _render: function(){},
             _events: {
-                '.testing click': function() { events.delegatedEvent(); },
-                '!window click': function() { events.directEvent(); },
-                'destroy': function() { events.destroyEvent(); },
-                'getOption': function() { events.getOptionEvent(); },
-                'getOptions': function() { events.getOptionsEvent(); },
-                'setOption': function() { events.setOptionEvent(); },
-                'setOptions': function() { events.setOptionsEvent(); },
-                'disable': function() { events.disableEvent(); },
-                'enable': function() { events.enableEvent(); }
+                '.testing click': function() { events.delegatedEvent.apply(arguments); },
+                '!window click': function() { events.directEvent.apply(arguments); },
+                'destroy': function() { events.destroyEvent.apply(arguments); },
+                'getOption': function() { events.getOptionEvent.apply(arguments); },
+                'getOptions': function() { events.getOptionsEvent.apply(arguments); },
+                'setOption': function() { events.setOptionEvent.apply(arguments); },
+                'setOptions': function() { events.setOptionsEvent.apply(arguments); },
+                'disable': function() { events.disableEvent.apply(arguments); },
+                'enable': function() { events.enableEvent.apply(arguments); }
             },
             _postevents: function(){},
             options: {
@@ -49,13 +49,14 @@ describe('jqfactory Test Suite', function () {
         spyOn(pluginProps, '_postevents').andCallThrough();
         spyOn(events, 'delegatedEvent').andCallThrough();
         spyOn(events, 'directEvent').andCallThrough();
-        spyOn(events, 'destroyEvent').andCallThrough();
-        spyOn(events, 'getOptionEvent').andCallThrough();
-        spyOn(events, 'getOptionsEvent').andCallThrough();
-        spyOn(events, 'setOptionEvent').andCallThrough();
-        spyOn(events, 'setOptionsEvent').andCallThrough();
-        spyOn(events, 'disableEvent').andCallThrough();
-        spyOn(events, 'enableEvent').andCallThrough();
+        spyOn(pluginProps._events, 'destroy').andCallThrough();
+        spyOn(pluginProps._events, 'getOption').andCallThrough();
+        spyOn(pluginProps._events, 'getOptions').andCallThrough();
+        spyOn(pluginProps._events, 'setOption').andCallThrough();
+        spyOn(pluginProps._events, 'setOptions').andCallThrough();
+        spyOn(pluginProps._events, 'disable').andCallThrough();
+        spyOn(pluginProps._events, 'enable').andCallThrough();
+        spyOn($.jqfactory.common, 'disable').andCallThrough();
         spyOn(events, '_onClickEvent').andCallThrough();
         spyOn(events, '_onBlurEvent').andCallThrough();
     });
@@ -134,7 +135,7 @@ describe('jqfactory Test Suite', function () {
         });
         describe('API methods', function() {
             describe('_on', function() {
-                it('multiple handlers', function() {
+                it('should work for multiple event handlers', function() {
                     pluginInstance._on({
                         'click': function() {
                             events._onClickEvent();
@@ -148,7 +149,7 @@ describe('jqfactory Test Suite', function () {
                     expect(events._onClickEvent).toHaveBeenCalled();
                     expect(events._onBlurEvent).toHaveBeenCalled();
                 });
-                it('single handler', function() {
+                it('should work for single event handler', function() {
                     pluginInstance._on('click', function() {
                             events._onClickEvent();
                     });
@@ -160,6 +161,51 @@ describe('jqfactory Test Suite', function () {
                     expect(events._onClickEvent).toHaveBeenCalled();
                     expect(events._onBlurEvent).toHaveBeenCalled();
                 });
+            });
+            describe('_off', function() {
+                it('should work for multiple event handlers', function() {
+                    pluginInstance._off(['.testing click', '!window click']);
+                    $('.testing').click();
+                    $(window).click();
+                    expect(events.delegatedEvent).not.toHaveBeenCalled();
+                    expect(events.directEvent).not.toHaveBeenCalled();
+                });
+                it('should work for single event handler', function() {
+                    pluginInstance._off('.testing click');
+                    pluginInstance._off('!window click');
+                    $('.testing').click();
+                    $(window).click();
+                    expect(events.delegatedEvent).not.toHaveBeenCalled();
+                    expect(events.directEvent).not.toHaveBeenCalled();
+                });
+            });
+            describe('_trigger', function() {
+                it('should work for triggering events on the widget element', function() {
+                    pluginInstance._trigger('enable', { randomArg: true });
+                    pluginInstance._trigger('disable');
+                    expect(pluginProps._events.enable).toHaveBeenCalled();
+                    expect(pluginProps._events.disable).toHaveBeenCalled();
+                    expect(pluginProps._events.enable.mostRecentCall.args.length).toBe(2);
+                    expect(pluginProps._events.enable.mostRecentCall.args[1]).toEqual({ randomArg: true });
+                    expect(pluginProps._events.disable.mostRecentCall.args.length).toBe(1);
+                });
+                it('should work for triggering events on any element using a string selector', function() {
+                    pluginInstance._trigger('.testing', 'click', { randomArg: true });
+                    pluginInstance._trigger('window', 'click');
+                    expect(events.delegatedEvent).toHaveBeenCalled();
+                    expect(events.directEvent).toHaveBeenCalled();
+                });
+            });
+            describe('_superMethod', function() {
+                it('should call the corresponding jqfactory method', function() {
+                    pluginInstance._superMethod('disable', { randomArg: true });
+                    expect($.jqfactory.common.disable).toHaveBeenCalled();
+                    expect($.jqfactory.common.disable.mostRecentCall.args[0]).toEqual({ randomArg: true });
+                    expect($.jqfactory.common.disable.mostRecentCall.args.length).toBe(1);
+                });
+            });
+            describe('delay', function() {
+
             });
         });
         describe('Delegated DOM Event Handlers', function() {
