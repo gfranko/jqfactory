@@ -10,6 +10,7 @@ jqfactory
 ##Notable Features
  - Supports jQuery prototype namespacing and event namespacing
  - Includes an elegant, promises-based, solution for plugins that rely on asynchronous behavior on initialization
+ - AMD support
  - Implements a simple inheritance paradigm that allows you to reuse methods/properties from other jqfactory plugins using mixins and prototypal inheritance to reuse jqfactory common methods
  - Saves all instance properties with the jQuery `data()` method to easily construct a public API
  - Provides over 10 public/private convenience methods/properties that are useful for plugin development
@@ -655,6 +656,12 @@ __Should I use this instead of the jQueryUI Widget Factory?__
    
    _jqfactory_ - Does not allow a widget to directly inherit from another widget.  To use another plugin's methods/properties, you must reference all plugin instance properties that are stored on the jQuery namespace.  Every plugin inherits from `$.jqfactory.common`.
 
+  **AMD**:
+
+   _jQueryUI Widget Factory_ - Does not provide AMD support.  **Note:** I talked to the jQueryUI Widget Factory core developer, Scott Gonzalez, recently and he said AMD support will be coming in a future release.
+   
+   _jqfactory_ - AMD is supported.  For more information about how to implement this, check out the other FAQ questions.
+
   **Events**:
 
    _jQueryUI Widget Factory_ - Allows you to add and remove plugin event handlers using the `_on()` and `_off()` methods.  Also allows you to trigger events and their associated option callbacks by using the `_trigger()` method.
@@ -680,6 +687,21 @@ __When would I use the _superMethod method?__
  __Why would you use jQuery prototype namespacing?__
 
  - If you are creating more than one jQuery plugin, then you can place all of your plugins under one top-level namespace on the jQuery prototype object.  This greatly reduces the possibility of running into a naming collision with another jQuery plugin.  A great example would be the Twitter Bootstrap library; it would be great if the Bootstrap library placed all of their individual jQuery plugins under a common bootstrap() namespace.
+
+  __Do you provide AMD support?__
+
+ - Yes!  jqfactory exports a named AMD module called, `jqfactory`, that allows plugin developers to provide AMD support by doing the following:
+
+ ```javascript
+    if (typeof define === 'function' && define.amd) {
+        // An AMD loader is on the page. List jquery and the jqfactory as dependencies and register your plugin as an anonymous AMD module.
+        define(['jquery', 'jqfactory'], function() {
+            // Call your plugin
+        });
+    } else {
+        // An AMD loader is not on the page.  Call your plugin.
+    }
+ ```
 
 ##Changelog
 
