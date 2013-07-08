@@ -16,7 +16,6 @@
     // Strict mode
     'use strict';
     var slice = Array.prototype.slice,
-        $fnProps,
         jqfactory = {
         create: function(name, props, enforceNamespace) {
             var names = name.split('.'),
@@ -42,7 +41,7 @@
                 }
             };
             Plugin.prototype = protoProps;
-            $[namespace][basename] = $fnProps = instanceProps;
+            $[namespace][basename] = instanceProps;
             if(enforceNamespace) {
                 namespaceObj[basename] = function(options) {
                     return this.each(function() {
