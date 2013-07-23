@@ -18,19 +18,20 @@
     var slice = Array.prototype.slice,
         jqfactory = {
         create: function(name, props, enforceNamespace) {
-            var names = name.split('.'),
+            var parentWidget = props._super,
+                names = name.split('.'),
                 namespace = names[0],
                 basename = names[1],
                 fullname = namespace + '-' + basename,
                 eventnamespace = '.' + fullname,
                 instanceProps = props,
-                protoProps = jqfactory.common,
+                protoProps = $.isPlainObject(parentWidget) && !$.isEmptyObject(parentWidget) ? $.extend(true, {}, jqfactory.common, parentWidget) : jqfactory.common,
                 setup,
                 namespaceObj = {},
                 currentNamespace = $.fn[namespace],
-                Plugin;
-            $[namespace] = $[namespace] || {};
-            if(!namespace || !basename || !$.isPlainObject(props) || $.isEmptyObject(props) || $[namespace][basename]) {
+                Plugin,
+                args;
+            if(!namespace || !basename || !$.isPlainObject(props) || $.isEmptyObject(props) || ($[namespace] && $[namespace][basename])) {
                 return;
             }
             Plugin = function(props) {
@@ -41,24 +42,30 @@
                 }
             };
             Plugin.prototype = protoProps;
+            $[namespace] = $[namespace] || {};
             $[namespace][basename] = instanceProps;
             if(enforceNamespace) {
                 namespaceObj[basename] = function(options) {
+                    args = arguments;
                     return this.each(function() {
-                        setup(this, options);
+                        setup.apply(this, args);
                     });
                 };
                 jqfactory.utils.createNamespace(namespace, namespaceObj);
             } else {
                 $.fn[basename] = function(options) {
+                    args = arguments;
                     return this.each(function() {
-                        setup(this, options);
+                        setup.apply(this, args);
                     });
                 };
             }
-            setup = function(element, options) {
-                var existingElem = props.element,
-                    elem = existingElem ? $(existingElem)[0] : element,
+            setup = function() {
+                var firstArg = arguments[0],
+                    options = $.isPlainObject(firstArg) ? firstArg : {},
+                    existingElem = props.element,
+                    callingElement = this,
+                    elem = existingElem ? $(existingElem)[0] : callingElement,
                     $elem = $(elem),
                     existingInstance = $.data(elem, fullname),
                     obj = {},
@@ -68,13 +75,15 @@
                     rendered;
                 if (existingInstance) {
                     existingInstance._init(options);
+                    existingInstance._superMethod.apply(existingInstance, arguments);
                     return;
                 }
                 widget = new Plugin(instanceProps);
                 widget.options = $.extend(true, {}, defaultOptions, options);
-                widget._super = jqfactory.common,
-                widget.callingElement = element;
-                widget.$callingElement = $(element);
+                widget._super = protoProps,
+                widget.jqfactory = jqfactory.common,
+                widget.callingElement = callingElement;
+                widget.$callingElement = $(callingElement);
                 widget.element = elem;
                 widget.$element = $elem;
                 widget.namespace = namespace;
@@ -87,14 +96,14 @@
                 };
                 $.extend($.expr[":"], obj);
                 created = widget._create() || {};
-                if(jqfactory.utils.isDeferred(created)) {
+                if(widget.isDeferred(created)) {
                     created.done(function() {
                         rendered = widget._render.apply(widget, arguments) || {};
-                        jqfactory.utils.postRender(rendered, widget, arguments);
+                        jqfactory.utils.postRender.call(widget, rendered, arguments);
                     });
                 } else {
                     rendered = widget._render() || {};
-                    jqfactory.utils.postRender(rendered, widget);
+                    jqfactory.utils.postRender.call(widget, rendered);
                 }
             };
         },
@@ -116,11 +125,9 @@
                     };
                 });
             },
-            isDeferred: function(def) {
-                return $.isPlainObject(def) && def.promise && def.done;
-            },
-            postRender: function(rendered, widget, args) {
-                if(jqfactory.utils.isDeferred(rendered)) {
+            postRender: function(rendered, args) {
+                var widget = this;
+                if(widget.isDeferred(rendered)) {
                     rendered.done(function() {
                         widget._on(widget._events);
                         widget._postevents.apply(widget, args);
@@ -174,8 +181,11 @@
             },
             _superMethod: function() {
                 var args = slice.call(arguments),
-                    method = args.shift();
-                return jqfactory.common[method].apply(this, args);
+                    method = args.shift(),
+                    proto = this._super;
+                if(proto[method]) {
+                    return proto[method].apply(this, args);
+                }
             },
             delay: function(handler, delay) {
                 function handlerProxy() {
@@ -261,7 +271,7 @@
                    }
                }
                return this;
-           },
+            },
             _eventBindings: function(pluginEvents, type) {
                 var widget = this,
                     widgetElem = widget.$element,
@@ -296,6 +306,9 @@
                     }
                 }
                 return this;
+            },
+            isDeferred: function(def) {
+                return $.isPlainObject(def) && $.isFunction(def.promise) && $.isFunction(def.done);
             }
         }
     };
@@ -304,6 +317,6 @@
             jqfactory.create.apply(this, arguments);
         };
         $.jqfactory.common = jqfactory.common;
-        $.jqfactory.VERSION = '0.2.0';
+        $.jqfactory.VERSION = '0.3.0';
     }
 }));
