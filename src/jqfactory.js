@@ -74,7 +74,7 @@
                     created,
                     rendered;
                 if (existingInstance) {
-                    existingInstance._init(options);
+                    existingInstance._init.apply(existingInstance, arguments);
                     existingInstance._superMethod.apply(existingInstance, arguments);
                     return;
                 }
