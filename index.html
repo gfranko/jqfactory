@@ -352,7 +352,6 @@
             example: 'this is an example'
         },
         _create: function() {
-
         },
         _init: function() {
         },
@@ -364,10 +363,17 @@
         _postevents: function(data) {
         },
         customMethod: function() {
+            console.log('this is a custom method', arguments);
         }
     }, true);
 </script>
 <script>
+    $.jqfactory('gui.selectbox2', {
+        _super: $.gui.selectbox,
+        _create: function() {
+            console.log('this', this);
+        }
+    }, true);
     $('select').gui().selectbox();
     $('select').first().gui().selectbox('option', 'example', 'I changed it!');
 </script>
