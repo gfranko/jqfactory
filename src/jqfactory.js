@@ -277,6 +277,7 @@
                     widgetElem = widget.$element,
                     spacePos = 0,
                     ev,
+                    callback,
                     currentCallback,
                     currentEvent,
                     directElemBinding,
@@ -288,7 +289,9 @@
                 }
                 for(ev in pluginEvents) {
                     spacePos = ev.lastIndexOf(' ');
-                    currentCallback = $.proxy(pluginEvents[ev], widget);
+                    callback = pluginEvents[ev];
+                    currentCallback = $.isFunction(callback) ? callback : $.type(callback) === 'string' && widget[callback] ? widget[callback] : $.noop;
+                    currentCallback = $.proxy(currentCallback, widget);
                     directElemBinding = ev.charAt(0) === '!';
                     currentEvent = ev.substring(spacePos + 1) + widget.eventnamespace;
                     if(spacePos === -1) {
