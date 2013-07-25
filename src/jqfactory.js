@@ -1,4 +1,4 @@
-/* jqfactory - v0.2.0 - 2013-7-03
+/* jqfactory - v0.3.0 - 2013-7-03
 * Copyright (c) 2013 Greg Franko; Licensed MIT */
 ;(function (jqfactory) {
     // Strict Mode
@@ -24,8 +24,15 @@
                 basename = names[1],
                 fullname = namespace + '-' + basename,
                 eventnamespace = '.' + fullname,
+                widgetProps = {
+                    jqfactory: jqfactory.common,
+                    namespace: namespace,
+                    basename: basename,
+                    fullname: fullname,
+                    eventnamespace: eventnamespace
+                },
                 instanceProps = props,
-                protoProps = $.isPlainObject(parentWidget) && !$.isEmptyObject(parentWidget) ? $.extend(true, {}, jqfactory.common, parentWidget) : jqfactory.common,
+                protoProps = $.extend({}, ($.isPlainObject(parentWidget) && !$.isEmptyObject(parentWidget) ? $.extend(true, {}, jqfactory.common, parentWidget) : jqfactory.common), widgetProps),
                 setup,
                 namespaceObj = {},
                 currentNamespace = $.fn[namespace],
@@ -80,16 +87,11 @@
                 }
                 widget = new Plugin(instanceProps);
                 widget.options = $.extend(true, {}, defaultOptions, options);
-                widget._super = protoProps,
-                widget.jqfactory = jqfactory.common,
+                widget._super = protoProps;
                 widget.callingElement = callingElement;
                 widget.$callingElement = $(callingElement);
                 widget.element = elem;
                 widget.$element = $elem;
-                widget.namespace = namespace;
-                widget.basename = basename;
-                widget.fullname = fullname;
-                widget.eventnamespace = eventnamespace;
                 $.data(elem, widget.fullname, widget);
                 obj[fullname] = function(elem) {
                     return $(elem).data(fullname) !== undefined;
@@ -290,8 +292,7 @@
                 for(ev in pluginEvents) {
                     spacePos = ev.lastIndexOf(' ');
                     callback = pluginEvents[ev];
-                    currentCallback = $.isFunction(callback) ? callback : $.type(callback) === 'string' && widget[callback] ? widget[callback] : $.noop;
-                    currentCallback = $.proxy(currentCallback, widget);
+                    currentCallback = $.proxy(($.isFunction(callback) ? callback : $.type(callback) === 'string' && widget[callback] ? widget[callback] : $.noop), widget);
                     directElemBinding = ev.charAt(0) === '!';
                     currentEvent = ev.substring(spacePos + 1) + widget.eventnamespace;
                     if(spacePos === -1) {

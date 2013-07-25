@@ -64,6 +64,7 @@ describe('jqfactory Test Suite', function () {
             spyOn(events, '_onClickEvent').andCallThrough();
             spyOn(events, '_onBlurEvent').andCallThrough();
             pluginInstance = $('.test').plugin().data('example-plugin');
+            spyOn(pluginInstance._super, 'disable').andCallThrough();
         });
         describe("initialization", function() {
             describe('methods', function() {
@@ -93,7 +94,6 @@ describe('jqfactory Test Suite', function () {
                 it('should create a _super property', function() {
                     expect(pluginInstance._super).toBeDefined();
                     expect($.isPlainObject(pluginInstance._super)).toBe(true);
-                    expect(pluginInstance._super).toEqual($.jqfactory.common);
                 });
                 it('should create a callingElement property', function() {
                     expect(pluginInstance.callingElement).toBeDefined();
@@ -206,11 +206,11 @@ describe('jqfactory Test Suite', function () {
                     pluginInstance._superMethod('disable', { randomArg: true });
                 });
                 it('should call the corresponding jqfactory method', function() {
-                    expect($.jqfactory.common.disable).toHaveBeenCalled();
+                    expect(pluginInstance._super.disable).toHaveBeenCalled();
                 });
                 it('should pass the correct arguments', function() {
-                    expect($.jqfactory.common.disable.mostRecentCall.args[0]).toEqual({ randomArg: true });
-                    expect($.jqfactory.common.disable.mostRecentCall.args.length).toBe(1);
+                    expect(pluginInstance._super.disable.mostRecentCall.args[0]).toEqual({ randomArg: true });
+                    expect(pluginInstance._super.disable.mostRecentCall.args.length).toBe(1);
                 });
             });
             describe('delay', function() {
