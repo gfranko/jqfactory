@@ -332,7 +332,7 @@ IE8+, Modern Browsers
 
     To call API methods, you have two options:
 
-    **Option 1*
+    **Option 1**
 
     Retrieve the plugin instance using the jQuery `data()` method.
 
