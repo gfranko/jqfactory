@@ -332,7 +332,9 @@ IE8+, Modern Browsers
 
     To call API methods, you have two options:
 
-    1. Retrieve the plugin instance using the jQuery `data()` method.
+    **Option 1*
+
+    Retrieve the plugin instance using the jQuery `data()` method.
 
     Example:
 
@@ -340,7 +342,9 @@ IE8+, Modern Browsers
     $('.test').greg().data('person-greg').someMethod();
     ```
 
-    2. Pass a string to the plugin after it is initialized
+    **Option 2**
+
+    Pass a string to the plugin after it is initialized
 
     Example:
 
@@ -356,25 +360,27 @@ IE8+, Modern Browsers
 
 ###Properties
 
-**_super** - A reference to the jqfactory parent object.  This is useful if you want to retrieve a jqfactory parent property.
+**_super** - A reference to the parent widget object (can be overriden)
 
-**callingElement** - The native DOM element that calls your plugin.
+**callingElement** - The native DOM element that calls your plugin
 
-**$callingElement** - The native DOM element that calls your plugin, wrapped in a jQuery object.
+**$callingElement** - The native DOM element that calls your plugin, wrapped in a jQuery object
 
-**element** - The native DOM element that is used for all delegated events.
+**element** - The native DOM element that is used for all delegated events (Can be overriden)
 
-**$element** - The native DOM element, wrapped in a jQuery object, that is used for all delegated events.
+**$element** - The native DOM element, wrapped in a jQuery object, that is used for all delegated events
 
-**options** - The currently used plugin options.
+**options** - The currently used plugin options
 
 **namespace** - Used internally (e.g. `'person')
 
 **basename** - Used internally (e.g. 'greg')
 
-**fullname** - Used internally (e.g. 'person-greg').
+**fullname** - Used internally (e.g. 'person-greg')
 
-**eventnamespace** - Used internally (e.g. '.person-greg').
+**eventnamespace** - Used internally (e.g. '.person-greg')
+
+**jqfactory** - Used internally (e.g. '.person-greg')
 
 
 ###Methods
@@ -735,6 +741,7 @@ __When would I use the _superMethod method?__
 
  - Inheritance - Widgets are now able to inherit from an object.
  - API Methods - Methods can now be called by passing a string to the plugin method (jQueryUI Widget Factory style)
+ - Support string method names in the `events` object and `_on()` methods (Similar to Backbone.js Views)
  - All widgets now have a **jqfactory** property (useful if you are inheriting from an object that has overriden a jqfactory method)
 
 `0.2.0` - July 7, 2013
