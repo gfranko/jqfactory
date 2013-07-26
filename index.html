@@ -368,14 +368,7 @@
     }, true);
 </script>
 <script>
-    $.jqfactory('gui.selectbox2', {
-        _super: $.gui.selectbox,
-        _create: function() {
-        }
-    }, true);
     $('select').gui().selectbox();
-    $('select').first().gui().selectbox('option', 'example', 'I changed it!');
-    $('select').gui().selectbox2();
 </script>
 </body>
 </html>

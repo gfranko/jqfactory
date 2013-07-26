@@ -11,10 +11,10 @@ jqfactory
  - Supports jQuery prototype namespacing and event namespacing
  - Includes an elegant, promises-based, solution for plugins that rely on asynchronous behavior on initialization
  - AMD support
- - Implements a simple inheritance paradigm that allows you to reuse methods/properties from other jqfactory plugins using mixins and prototypal inheritance to reuse jqfactory common methods
- - Saves all instance properties with the jQuery `data()` method to easily construct a public API
+ - Implements a simple prototypal inheritance paradigm that allows you to reuse methods/properties from objects and jqfactory itself
+ - Saves all instances within the jQuery `data()` method and allows you to call plugin methods by passing a string to the plugin method to easily construct a public API
  - Provides over 10 public/private convenience methods/properties that are useful for plugin development
- - Supports automatic event binding/delegation and event removal
+ - Supports easy event binding/delegation (similar to Backbone.js views) and event removal
  - Prevents multiple plugin initializations per element
  - Provides a jQuery plugin pseudo selector to query for all DOM elements that have called the plugin
 
@@ -186,8 +186,7 @@ IE8+, Modern Browsers
                 '.face click': function (ev) {
                 },
                 // The exclamation point tells jqfactory that this event should be directly bound (not delegated)
-                '!.developer click': function() {
-                },
+                '!.developer click': 'somePluginMethod',
                 // Click event that is triggered on the element that called the plugin
                 'click': function() {
                 },
@@ -235,8 +234,7 @@ IE8+, Modern Browsers
                 '.face click': function (ev) {
                 },
                 // The exclamation point tells jqfactory that this event should be directly bound (not delegated)
-                '!.developer click': function() {
-                },
+                '!.developer click': 'somePluginMethod',
                 // Click event that is triggered on the element that called the plugin
                 'click': function() {
                 },
@@ -291,8 +289,7 @@ IE8+, Modern Browsers
                 '.face click': function (ev) {
                 },
                 // The exclamation point tells jqfactory that this event should be directly bound (not delegated)
-                '!.developer click': function() {
-                },
+                '!.developer click': 'somePluginMethod',
                 // Click event that is triggered on the element that called the plugin
                 'click': function() {
                 },
@@ -327,13 +324,33 @@ IE8+, Modern Browsers
     $('.test').greg();
     ```
 
-    If you had added a `true` third parameter to the `$.jqfactory()` method, then you would call your plugin like this:
+    If you had added a `true` third parameter (the **enforceNamespace** parameter) to the `$.jqfactory()` method, then you would call your plugin like this:
 
     ```javascript
     $('.test').person().greg();
     ```
 
+    To call API methods, you have two options:
+
+    1. Retrieve the plugin instance using the jQuery `data()` method.
+
+    Example:
+
+    ```javascript
+    $('.test').greg().data('person-greg').someMethod();
+    ```
+
+    2. Pass a string to the plugin after it is initialized
+
+    Example:
+
+    ```javascript
+    $('.test').greg();
+    $('.test').greg('someMethod');
+    ```
+
     Continue building on top of what you already have and make great plugins!
+
 
 ##API
 
@@ -440,7 +457,7 @@ this._on('.test click', function(){});
 ```javascript
 this.on({
     '.test click': function(){},
-    '.test mouseenter': function(){}
+    '.test mouseenter': 'someMethod'
 });
 ```
 
@@ -632,12 +649,6 @@ __Should I use this instead of the jQueryUI Widget Factory?__
 
  - It depends.  Both are great solutions, but here are some of the differences:
 
-  **User API**:
-
-   _jQueryUI Widget Factory_ - Allows API methods to be called by invoking the plugin method and passing the method name as a string or by calling the plugin instance stored inside of each calling element's jQuery `data` method.
-   
-   _jqfactory_ - API methods must be called from the plugin instance that is stored inside of each calling element's jQuery `data` method
-
   **Namespacing**:
 
    _jQueryUI Widget Factory_ - Does not support jQuery prototype namespacing.  All plugins are place on the jQuery prototype using just their base name.
@@ -652,25 +663,40 @@ __Should I use this instead of the jQueryUI Widget Factory?__
 
   **Inheritance**:
 
-   _jQueryUI Widget Factory_ - Allows an individual widget to inherit from another widget.  By default, inherits from `$.Widget`
+   _jQueryUI Widget Factory_ - Allows an individual widget to inherit from a function.  By default, inherits from `$.Widget`
    
-   _jqfactory_ - Does not allow a widget to directly inherit from another widget.  To use another plugin's methods/properties, you must reference all plugin instance properties that are stored on the jQuery namespace.  Every plugin inherits from `$.jqfactory.common`.
+   _jqfactory_ - Allows an individual widget to inherit from an object.  By default, inherits from `$.jqfactory.common`.
 
   **AMD**:
 
    _jQueryUI Widget Factory_ - Does not provide AMD support.  **Note:** I talked to the jQueryUI Widget Factory core developer, Scott Gonzalez, recently and he said AMD support will be coming in a future release.
    
-   _jqfactory_ - AMD is supported.  For more information about how to implement this, check out the other FAQ questions.
+   _jqfactory_ - AMD is supported.  The named AMD module, `jqfactory`, is exported.
 
   **Events**:
 
    _jQueryUI Widget Factory_ - Allows you to add and remove plugin event handlers using the `_on()` and `_off()` methods.  Also allows you to trigger events and their associated option callbacks by using the `_trigger()` method.
    
-   _jqfactory_ - Allows you to easily group the majority of your event handlers inside of an `_events` object.  Event handlers can also be added and remove at different times using the `_on()` and `_off()` methods, and events can be triggered using the `_trigger()` method.  **It is important to note that jqfactory does not natively support passing an event callback as an option.**
+   _jqfactory_ - Allows you to easily group the majority of your event handlers inside of an `_events` object (similar to Backbone.js Views).  Event handlers can also be added and removed at different times using the `_on()` and `_off()` methods, and events can be triggered using the `_trigger()` method.  **It is important to note that jqfactory does not natively support passing an event callback as an option.**
 
 __How do I change which DOM element my _events property delegates from?__
 
  - If you would like your event handlers to delegate from a different element than one that called your plugin, then you can overwrite the `element` instance property.  If you overwrite the `element` property, then you can still find out which element called your plugin by using the `callingElement` property.
+
+ __How do I get my widget to inherit from an object?__
+
+ - By default jqfactory widgets inherit from the $.jqfactory.common object.  If you would like to inherit from a different object, then you can override the `_super` property like this:
+
+ ```javascript
+$.jqfactory.create('example.plugin', {
+    _super: {
+        exampleMethod: function() {}
+    }
+    // The rest of your plugin goes here
+});
+ ```
+
+ When you override the `_super` property, the `$.jqfactory.common` object is merged with the `_super` object.  If your `_super` object overrides a jqfactory method, you can still access the jqfactory method using the `jqfactory` shortcut property.
 
  __What do I do if my plugin depends on asynchronous code to start?__
 
@@ -686,7 +712,7 @@ __When would I use the _superMethod method?__
 
  __Why would you use jQuery prototype namespacing?__
 
- - If you are creating more than one jQuery plugin, then you can place all of your plugins under one top-level namespace on the jQuery prototype object.  This greatly reduces the possibility of running into a naming collision with another jQuery plugin.  A great example would be the Twitter Bootstrap library; it would be great if the Bootstrap library placed all of their individual jQuery plugins under a common bootstrap() namespace.
+ - If you are creating more than one jQuery plugin, then you can place all of your plugins under one top-level namespace function on the jQuery prototype object.  This greatly reduces the possibility of running into a naming collision with another jQuery plugin.  A great example would be the Twitter Bootstrap library; it would be great if the Bootstrap library placed all of their individual jQuery plugins under a common bootstrap() function namespace.
 
   __Do you provide AMD support?__
 
@@ -704,6 +730,12 @@ __When would I use the _superMethod method?__
  ```
 
 ##Changelog
+
+`0.3.0` - July 26, 2013
+
+ - Inheritance - Widgets are now able to inherit from an object.
+ - API Methods - Methods can now be called by passing a string to the plugin method (jQueryUI Widget Factory style)
+ - All widgets now have a **jqfactory** property (useful if you are inheriting from an object that has overriden a jqfactory method)
 
 `0.2.0` - July 7, 2013
 

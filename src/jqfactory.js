@@ -1,4 +1,4 @@
-/* jqfactory - v0.3.0 - 2013-7-03
+/* jqfactory - v0.3.0 - 2013-7-26
 * Copyright (c) 2013 Greg Franko; Licensed MIT */
 ;(function (jqfactory) {
     // Strict Mode
