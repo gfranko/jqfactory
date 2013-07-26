@@ -353,7 +353,7 @@ IE8+, Modern Browsers
     $('.test').greg('someMethod');
     ```
 
-    Continue building on top of what you already have and make great plugins!
+    Continue building on top of jqfactory and make great plugins!
 
 
 ##API
