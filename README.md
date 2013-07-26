@@ -380,7 +380,7 @@ IE8+, Modern Browsers
 
 **eventnamespace** - Used internally (e.g. '.person-greg')
 
-**jqfactory** - Used internally (e.g. '.person-greg')
+**jqfactory** - A convenience property that contains the $.jqfactory.common object
 
 
 ###Methods
