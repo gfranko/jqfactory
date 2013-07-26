@@ -649,6 +649,24 @@ this.option({ 'someOption': 'example', 'someOtherOption.someNestedOption': 'anot
 this.option({ 'someOption': 'example', 'someOtherOption': { 'someNestedOption': 'anotherExample' } });
 ```
 
+###Default Events
+
+**Note**: All events are triggered with the event namespace (e.g. `setOption.person-greg`)
+
+**disable** - Triggered when the `disable()` method is called
+
+**enable** - Triggered when the `enable()` method is called
+
+**destroy** - Triggered when the `destroy()` method is called
+
+**getOptions** - Triggered when the `option()` method is called with zero arguments
+
+**getOption** - Triggered when the `option()` method is called to retrieve a single option
+
+**setOptions** - Triggered when the `option()` method is called with an object literal argument
+
+**setOption** - Triggered when the `option()` method is called to set a single option
+
 ##FAQ
 
 __Should I use this instead of the jQueryUI Widget Factory?__
@@ -742,6 +760,7 @@ __When would I use the _superMethod method?__
  - Inheritance - Widgets are now able to inherit from an object.
  - API Methods - Methods can now be called by passing a string to the plugin method (jQueryUI Widget Factory style)
  - Support string method names in the `events` object and `_on()` methods (Similar to Backbone.js Views)
+ - Triggered handy default events (e.g. disable, enable, destroy, setOptions, etc)
  - All widgets now have a **jqfactory** property (useful if you are inheriting from an object that has overriden a jqfactory method)
 
 `0.2.0` - July 7, 2013
