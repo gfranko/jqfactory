@@ -68,7 +68,8 @@
                 };
             }
             setup = function() {
-                var firstArg = arguments[0],
+                var args = slice.call(arguments),
+                    firstArg = args[0],
                     options = $.isPlainObject(firstArg) ? firstArg : {},
                     existingElem = props.element,
                     callingElement = this,
@@ -82,7 +83,10 @@
                     rendered;
                 if (existingInstance) {
                     existingInstance._init.apply(existingInstance, arguments);
-                    existingInstance._superMethod.apply(existingInstance, arguments);
+                    if($.type(firstArg) === 'string') {
+                        args.shift();
+                        existingInstance[firstArg].apply(existingInstance, args);
+                    }
                     return;
                 }
                 widget = new Plugin(instanceProps);
