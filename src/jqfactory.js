@@ -86,7 +86,7 @@
                     if($.type(firstArg) === 'string') {
                         args.shift();
                         if($.isFunction(existingInstance[firstArg])) {
-                            return existingInstance[firstArg].apply(existingInstance, args);
+                            existingInstance[firstArg].apply(existingInstance, args);
                         }
                     }
                     return;
