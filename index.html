@@ -352,6 +352,7 @@
             example: 'this is an example'
         },
         _create: function() {
+            console.log('create called');
         },
         _init: function() {
         },
@@ -369,6 +370,7 @@
 </script>
 <script>
     $('select').gui().selectbox();
+    console.log($('select').gui().selectbox('option'));
 </script>
 </body>
 </html>

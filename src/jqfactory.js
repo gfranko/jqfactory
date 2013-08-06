@@ -33,6 +33,7 @@
                 },
                 instanceProps = props,
                 protoProps = $.extend({}, ($.isPlainObject(parentWidget) && !$.isEmptyObject(parentWidget) ? $.extend(true, {}, jqfactory.common, parentWidget) : jqfactory.common), widgetProps),
+                init,
                 setup,
                 namespaceObj = {},
                 currentNamespace = $.fn[namespace],
@@ -53,23 +54,22 @@
             $[namespace][basename] = instanceProps;
             if(enforceNamespace) {
                 namespaceObj[basename] = function(options) {
-                    args = arguments;
-                    return this.each(function() {
-                        setup.apply(this, args);
-                    });
+                    return init.apply(this, arguments);
                 };
                 jqfactory.utils.createNamespace(namespace, namespaceObj);
             } else {
                 $.fn[basename] = function(options) {
-                    args = arguments;
-                    return this.each(function() {
-                        setup.apply(this, args);
-                    });
+                    return init.apply(this, arguments);
                 };
             }
+            init = function() {
+                args = slice.call(arguments);
+                return this.each(function() {
+                    setup.apply(this, args);
+                });
+            },
             setup = function() {
-                var args = slice.call(arguments),
-                    firstArg = args[0],
+                var firstArg = args[0],
                     options = $.isPlainObject(firstArg) ? firstArg : {},
                     existingElem = props.element,
                     callingElement = this,
@@ -86,7 +86,7 @@
                     if($.type(firstArg) === 'string') {
                         args.shift();
                         if($.isFunction(existingInstance[firstArg])) {
-                            existingInstance[firstArg].apply(existingInstance, args);
+                            return existingInstance[firstArg].apply(existingInstance, args);
                         }
                     }
                     return;
