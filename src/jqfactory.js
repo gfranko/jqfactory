@@ -5,8 +5,8 @@
     'use strict';
     if (typeof define === 'function' && define.amd) {
         // An AMD loader is on the page. Register jqfactory as a named AMD module.
-        define('jqfactory', ['jquery'], function() {
-            jqfactory(window.jQuery, window, document);
+        define('jqfactory', ['jquery'], function($) {
+            jqfactory($, window, document);
         });
     } else {
         // An AMD loader is not on the page.
