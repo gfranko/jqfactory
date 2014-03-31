@@ -84,9 +84,10 @@
                 if (existingInstance) {
                     existingInstance._init.apply(existingInstance, arguments);
                     if($.type(firstArg) === 'string') {
-                        args.shift();
+                        var instanceArgs = slice.call(args);
+                        instanceArgs.shift();
                         if($.isFunction(existingInstance[firstArg])) {
-                            existingInstance[firstArg].apply(existingInstance, args);
+                            existingInstance[firstArg].apply(existingInstance, instanceArgs);
                         }
                     }
                     return;
