@@ -121,18 +121,19 @@
                 if (!$.fn[namespaceName]) {
                     $.fn[namespaceName] = function Namespace(context) {
                         if (this instanceof Namespace) {
+                            var self = this;
                             this.__namespace_context__ = context;
+                            $.each(namespaceFuncs, function(closureName, closure) {
+                                self[closureName] = function() {
+                                    return closure.apply(this.__namespace_context__, arguments);
+                                };
+                            });
                         }
                         else {
                             return new Namespace(this);
                         }
                     };
                 }
-                $.each(namespaceFuncs, function(closureName, closure) {
-                    $.fn[namespaceName].prototype[closureName] = function() {
-                        return closure.apply(this.__namespace_context__, arguments);
-                    };
-                });
             },
             postRender: function(rendered, args) {
                 var widget = this;
